@@ -1,4 +1,6 @@
-
+'''
+Windows heap allocation helper module
+'''
 # Heap Flags
 HEAP_NO_SERIALIZE               = 0x00000001
 HEAP_GROWABLE                   = 0x00000002

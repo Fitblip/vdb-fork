@@ -1,3 +1,6 @@
+'''
+Extra utilities for vtrace
+'''
 # Copyright (C) 2007 Invisigoth - See LICENSE file for details
 
 import vtrace

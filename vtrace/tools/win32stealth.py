@@ -1,3 +1,6 @@
+'''
+Try to prevent an executable from knowing it's being debugged. 
+'''
 import vtrace
 import vstruct
 

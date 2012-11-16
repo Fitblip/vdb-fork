@@ -1,3 +1,6 @@
+'''
+QtGui objects which assist in GUIs which use vtrace parts.
+'''
 from PyQt4 import QtCore, QtGui
 
 import vtrace
@@ -9,10 +12,6 @@ import vqt.colors as vq_colors
 
 from envi.threads import firethread
 from vqt.main import idlethread, idlethreadsync
-
-'''
-QtGui objects which assist in GUIs which use vtrace parts.
-'''
 
 class VQTraceNotifier(vtrace.Notifier):
     '''
