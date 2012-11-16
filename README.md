@@ -5,13 +5,13 @@ A fork of @invisig0th's VDB, for bugfixes, and other stuff.
 
 I'm going to attempt to fix a bug or two I've stumbled across, and maybe come up with some tests for VDB. 
                                           
-===== Intro  ===================================================
+#Intro
 
 VDB is a debugger written using the vtrace API.  For the list
 of kewl stuff and supported features, see the vtrace docs.
 
 
-===== Usage  ===================================================
+#Usage
 
 I usually run it directly from the checkout without going through
 any kind of installation.  From a windows/unix command prompt,
@@ -23,7 +23,7 @@ a working install of pygtk (which means gtk/pango/etc).
 I'm not really one for writting a LOT of docs, but explore and have fun.
 
 
-===== Known Iusses  ============================================
+#Known Iusses
 
  * -R and firewalls
     Remove debugging with vdb is possible with the use of the
