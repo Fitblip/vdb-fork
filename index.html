@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Vdb-fork by Fitblip</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Vdb-fork</h1>
+        <h2>A fork of @invisig0th's VDB, for bugfixes, and other stuff. </h2>
+
+        <section id="downloads">
+          <a href="https://github.com/Fitblip/vdb-fork/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/Fitblip/vdb-fork/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/Fitblip/vdb-fork" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p>This is my personal fork of <a href="https://github.com/invisig0th" class="user-mention">@invisig0th</a>'s VDB, for bugfixes, documentation and other stuff. </p>
+
+<p>I'm going to attempt to fix a bug or two I've stumbled across, and maybe come up with some tests for VDB. This will also serve as a good point for documentation (currently Epydocs until I discover enough to start some Sphinx documentation). </p>
+
+<h1>Intro</h1>
+
+<p>VDB is a debugger written using the vtrace API.  For the list
+of kewl stuff and supported features, see the vtrace docs.</p>
+
+<h1>Usage</h1>
+
+<p>I usually run it directly from the checkout without going through
+any kind of installation.  From a windows/unix command prompt,
+"python vdbbin" should suffice.</p>
+
+<p>If you want to use the gui (on mac/linux/windows) you will need
+a working install of PyQT4</p>
+
+<p>I'm not really one for writing a LOT of docs, but explore and have fun.</p>
+
+<h1>Known Issues</h1>
+
+<ul>
+<li><p>-R and firewalls
+Remove debugging with vdb is possible with the use of the
+"server" command and the -R option.  <em>However</em>, cobra
+(the underlying RMI model) will attempt transparent reconnection
+for robustness.  This means that firewalls can cause it to hang
+as it tries to reconnect.  This also means that one socket dying
+once doesn't destroy your debugging session ;)</p></li>
+<li><p>NonBlocking or ThreadWrap modes
+Though these modes are listed in the modes selection interface
+you may <em>not</em> turn them off.  They are critical to the function
+of vdb as a non-blocking debugger...</p></li>
+</ul>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
