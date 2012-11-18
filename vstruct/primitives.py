@@ -426,10 +426,6 @@ class v_wstr(v_str):
     def vsEmit(self):
         return self._vs_value
 
-    def vsGetValue(self):
-        cstr = self._vs_value.decode(self._vs_encode)
-        return cstr.split('\x00')[0]
-
     def vsSetValue(self, val):
         rbytes = val.encode(self._vs_encode)
         self._vs_value = rbytes.ljust(len(self), '\x00')
