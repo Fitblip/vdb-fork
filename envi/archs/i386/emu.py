@@ -1525,7 +1525,9 @@ class IntelEmulator(i386RegisterContext, envi.Emulator):
         else:
             edi += 1
         self.setRegister(REG_EDI, edi)
-
+    
+    # Another overloaded function, not sure which one to go with...
+    """
     def i_stosd(self, op):
         eax = self.getRegister(REG_EAX)
         edi = self.getRegister(REG_EDI)
@@ -1536,6 +1538,18 @@ class IntelEmulator(i386RegisterContext, envi.Emulator):
         else:
             edi += 4
         self.setRegister(REG_EDI, edi)
+            # FIXME stos variants go here
+    """
+
+    def i_stosd(self, op):
+        eax = self.getRegister(REG_EAX)
+        edi = self.getRegister(REG_EDI)
+        # FIXME shouldn't have to do this directly
+        # FIXME this needs a 32/16 bit mode check
+        base,size = self._emu_segments[SEG_ES]
+        self.writeMemValue(base+edi, eax, 4)
+        # FIXME edi inc must be by oper len
+        self.setRegister(REG_EDI, edi+4)
 
     # We include all the possible SETcc names just in case somebody
     # gets hinkey with the disassembler.
@@ -1601,17 +1615,6 @@ class IntelEmulator(i386RegisterContext, envi.Emulator):
 
     def i_sti(self, op):
         self.setFlag(EFLAGS_IF, True)
-
-    # FIXME stos variants go here
-    def i_stosd(self, op):
-        eax = self.getRegister(REG_EAX)
-        edi = self.getRegister(REG_EDI)
-        # FIXME shouldn't have to do this directly
-        # FIXME this needs a 32/16 bit mode check
-        base,size = self._emu_segments[SEG_ES]
-        self.writeMemValue(base+edi, eax, 4)
-        # FIXME edi inc must be by oper len
-        self.setRegister(REG_EDI, edi+4)
 
     def i_sub(self, op):
         x = self.integerSubtraction(op)
