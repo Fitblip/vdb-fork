@@ -256,6 +256,64 @@ class IMemory:
         b = self.readMemory(va, 16)
         return self.imem_arch.makeOpcode(b, 0, va)
 
+    def findOpcode(self,opcode=None,loc=None,size=1000,verbose=False):
+        '''
+        Starts at the current EIP (self.getProgramCounter()), and 
+        searches each instruction for the instruction requested. 
+
+        Returns the address of the first found opcode, than returns. 
+
+        Example:
+        # Find the first 'popad' opcode
+          In [1]: popad_loc = trace.findOpcode(opcode="popad",verbose=True)
+          [+] 0x1020cd0L pushad
+          [+] 0x1020cd1L mov esi,0x0101a000
+          [+] 0x1020cd6L lea edi,dword [esi - 102400]
+          [+] 0x1020cdcL push edi
+          [+] 0x1020cddL or ebp,0xffffffff
+          --SNIP--
+          [+] 0x1020e49L push edi
+          [+] 0x1020e4aL call ebp
+          [+] 0x1020e4cL pop eax
+          [+] 0x1020e4dL popad
+          Location - 0x01020E4D
+
+        # Using popad's location, search for the next 'jmp'
+          In [2]: jmp = trace.findOpcode(loc=popad_loc.va, opcode="jmp", verbose=True)
+          [+] 0x1020e4dL popad
+          [+] 0x1020e4eL lea eax,dword [esp - 128]
+          [+] 0x1020e52L push 0
+          [+] 0x1020e54L cmp esp,eax
+          [+] 0x1020e56L jnz 0x01020e52
+          [+] 0x1020e58L sub esp,0xffffff80
+          [+] 0x1020e5bL jmp 0x01012475
+          Location - 0x01020E5B
+
+        # Or you can do it simply
+
+
+        #TODO Extend to take in expressions.
+        '''
+        # If location is specified use that, otherwise use EIP
+        if loc:
+            offset = loc
+        else:
+            offset = self.getProgramCounter()
+        if not opcode:
+            print "You didn't give me an opcode dude!"
+            return False
+        while offset < (offset + size):
+            cur_opcode = self.parseOpcode(offset)
+            if verbose:
+                print '[+] ' + hex(cur_opcode.va) + ' ' + repr(cur_opcode)
+            if cur_opcode.mnem == opcode:
+                if verbose: 
+                    print "Location - 0x" + ("%0.8x".upper() % cur_opcode.va)
+                return cur_opcode
+            offset += cur_opcode.size
+
+
+
 class MemoryObject(IMemory):
 
     def __init__(self, archmod=None):
