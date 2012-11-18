@@ -6,8 +6,8 @@ A fork of @invisig0th's VDB, for bugfixes, and other stuff.
 I'm going to attempt to fix a bug or two I've stumbled across, and maybe come up with some tests for VDB. 
 
 # Major differences
-- Issue #1 fixed, by using v_uint16() instead of v_bytes(2) for the Magic optional header 
-- Changed vstruct.VStruct class's __repr__() method to something I think is a bit easier to read when exploring
+- Issue #1 fixed, by using `v_uint16()` instead of `v_bytes(2)` for the Magic optional header, which now gives the correct value
+- Changed vstruct.VStruct class's `__repr__()` method to something I think is a bit easier to read when exploring
 
 #Intro
 
