@@ -119,7 +119,7 @@ class IMAGE_NT_HEADERS64(vstruct.VStruct):
 class IMAGE_OPTIONAL_HEADER(vstruct.VStruct):
     def __init__(self):
         vstruct.VStruct.__init__(self)
-        self.Magic                       = v_bytes(2)
+        self.Magic                       = v_uint16()
         self.MajorLinkerVersion          = v_uint8()
         self.MinorLinkerVersion          = v_uint8()
         self.SizeOfCode                  = v_uint32()
