@@ -5,7 +5,9 @@ import envi.bintree as e_btree
 
 import envi.archs.arm.disasm as arm_dis
 import envi.archs.arm.armdisasm as arm_armdis
+from   envi.archs.arm.armdisasm import ArmRegOper, shmask
 import envi.archs.arm.regs as arm_reg
+
 
 thumb_32 = [
         binary('11101'),
@@ -50,7 +52,7 @@ def d1_rm4_rd3(va, value):
     rdbit = shmaskval(value, 4, 0x8)
     rd = shmaskval(value, 0, 0x7) + rdbit
     rm = shmaskval(value, 3, 0xf)
-    return ArmRegOper(rd),ArmRegOper(rn)
+    return ArmRegOper(rd),ArmRegOper(rm)
 
 def rm_rn_rt(va, value):
     rt = shmask(value, 0, 0x7) # target
@@ -73,7 +75,7 @@ def rd_sp_imm8(va, value):
     imm = shmask(value, 0, 0xff)
     oper0 = arm_dis.ArmRegOper(rd)
     # pre-compute PC relative addr
-    oper1 = arm_dis.ArmImmOffsetOper(REG_SP, imm)
+    oper1 = arm_dis.ArmImmOffsetOper(arm_reg.REG_SP, imm)
     return oper0,oper1
 
 def rd_pc_imm8(va, value):
