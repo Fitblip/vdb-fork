@@ -313,7 +313,7 @@ class VStruct(vs_prims.v_base):
         return iter(ret)
 
     def __repr__(self):
-        return self._vs_name
+        return '[%s] %s' % ("VStruct", self._vs_name)
 
     def tree(self, va=0, reprmax=None):
         ret = ""
