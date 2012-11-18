@@ -61,7 +61,7 @@ class IMAGE_FILE_HEADER(vstruct.VStruct):
         self.PointerToSymbolTable = v_uint32()
         self.NumberOfSymbols      = v_uint32()
         self.SizeOfOptionalHeader = v_uint16()
-        self.Ccharacteristics     = v_uint16()
+        self.Characteristics      = v_uint16()
 
 class IMAGE_IMPORT_DIRECTORY(vstruct.VStruct):
     def __init__(self):
