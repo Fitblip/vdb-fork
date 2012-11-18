@@ -46,7 +46,7 @@ class v_prim(v_base):
         # Most primitives should be able to simply use this...
         fbytes = fd.read(self._vs_length)
         if len(fbytes) != self._vs_length:
-            raise Excetpion('Not enough data in fd!')
+            raise Exception('Not enough data in fd!')
 
         self.vsParse(fbytes)
 
