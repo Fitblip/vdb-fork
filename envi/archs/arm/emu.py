@@ -464,7 +464,9 @@ class ArmEmulator(ArmModule, ArmRegisterContext, envi.Emulator):
         self.setFlag(PSR_Z, (0,1)[ures==0])
         self.setFlag(PSR_C, e_bits.is_unsigned_carry(ures, dsize))
         #self.setFlag(PSR_V, e_bits.is_signed_overflow(sres, dsize))
-        
+
+    # FB This is redefined right after this function, though this one looks more complete...
+    """   
     def i_rsb(self, op):
         src1 = self.getOperValue(op, 1)
         src2 = self.getOperValue(op, 2)
@@ -501,6 +503,7 @@ class ArmEmulator(ArmModule, ArmRegisterContext, envi.Emulator):
             self.setFlag(PSR_Z, not ures)
             self.setFlag(PSR_N, e_bits.is_signed(ures, dsize))
             self.setFlag(PSR_V, e_bits.is_signed_overflow(sres, dsize))
+    """
 
     def i_rsb(self, op):
         # Src op gets sign extended to dst
