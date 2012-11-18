@@ -593,7 +593,7 @@ class GdbStubMixin_old(e_registers.RegisterContext):
             while not self.readMemory(kptr, 16).startswith('MZ\x90\x00'):
                 kptr -= 4096
             return kptr
-        except Exception, e:
+        except Exception:
             return None
 
     def _enumTargetOs(self, fsbase):

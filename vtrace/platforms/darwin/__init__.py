@@ -16,181 +16,181 @@ import vtrace.archs.amd64 as v_amd64
 import vtrace.platforms.base as v_base
 import vtrace.platforms.posix as v_posix
 
-addrof = ctypes.pointer
+addrof                  = ctypes.pointer
 
 # The OSX ptrace defines...
-PT_TRACE_ME     = 0    # child declares it's being traced
-PT_READ_I       = 1    # read word in child's I space
-PT_READ_D       = 2    # read word in child's D space
-PT_READ_U       = 3    # read word in child's user structure
-PT_WRITE_I      = 4    # write word in child's I space
-PT_WRITE_D      = 5    # write word in child's D space
-PT_WRITE_U      = 6    # write word in child's user structure
-PT_CONTINUE     = 7    # continue the child
-PT_KILL         = 8    # kill the child process
-PT_STEP         = 9    # single step the child
-PT_ATTACH       = 10   # trace some running process
-PT_DETACH       = 11   # stop tracing a process
-PT_SIGEXC       = 12   # signals as exceptions for current_proc
-PT_THUPDATE     = 13   # signal for thread#
-PT_ATTACHEXC    = 14   # attach to running process with signal exception
-PT_FORCEQUOTA   = 30   # Enforce quota for root
-PT_DENY_ATTACH  = 31
+PT_TRACE_ME             = 0    # child declares it's being traced
+PT_READ_I               = 1    # read word in child's I space
+PT_READ_D               = 2    # read word in child's D space
+PT_READ_U               = 3    # read word in child's user structure
+PT_WRITE_I              = 4    # write word in child's I space
+PT_WRITE_D              = 5    # write word in child's D space
+PT_WRITE_U              = 6    # write word in child's user structure
+PT_CONTINUE             = 7    # continue the child
+PT_KILL                 = 8    # kill the child process
+PT_STEP                 = 9    # single step the child
+PT_ATTACH               = 10   # trace some running process
+PT_DETACH               = 11   # stop tracing a process
+PT_SIGEXC               = 12   # signals as exceptions for current_proc
+PT_THUPDATE             = 13   # signal for thread#
+PT_ATTACHEXC            = 14   # attach to running process with signal exception
+PT_FORCEQUOTA           = 30   # Enforce quota for root
+PT_DENY_ATTACH          = 31
 
 # Top-level identifiers
-CTL_UNSPEC  = 0        # unused
-CTL_KERN    = 1        # "high kernel": proc, limits
-CTL_VM      = 2        # virtual memory
-CTL_VFS     = 3        # file system, mount type is next
-CTL_NET     = 4        # network, see socket.h
-CTL_DEBUG   = 5        # debugging parameters
-CTL_HW      = 6        # generic cpu/io
-CTL_MACHDEP = 7        # machine dependent
-CTL_USER    = 8        # user-level
-CTL_MAXID   = 9        # number of valid top-level ids
+CTL_UNSPEC              = 0        # unused
+CTL_KERN                = 1        # "high kernel": proc, limits
+CTL_VM                  = 2        # virtual memory
+CTL_VFS                 = 3        # file system, mount type is next
+CTL_NET                 = 4        # network, see socket.h
+CTL_DEBUG               = 5        # debugging parameters
+CTL_HW                  = 6        # generic cpu/io
+CTL_MACHDEP             = 7        # machine dependent
+CTL_USER                = 8        # user-level
+CTL_MAXID               = 9        # number of valid top-level ids
 
-KERN_OSTYPE          = 1    # string: system version
-KERN_OSRELEASE       = 2    # string: system release
-KERN_OSREV           = 3    # int: system revision
-KERN_VERSION         = 4    # string: compile time info
-KERN_MAXVNODES       = 5    # int: max vnodes
-KERN_MAXPROC         = 6    # int: max processes
-KERN_MAXFILES        = 7    # int: max open files
-KERN_ARGMAX          = 8    # int: max arguments to exec
-KERN_SECURELVL       = 9    # int: system security level
-KERN_HOSTNAME        = 10    # string: hostname
-KERN_HOSTID          = 11    # int: host identifier
-KERN_CLOCKRATE       = 12    # struct: struct clockrate
-KERN_VNODE           = 13    # struct: vnode structures
-KERN_PROC            = 14    # struct: process entries
-KERN_FILE            = 15    # struct: file entries
-KERN_PROF            = 16    # node: kernel profiling info
-KERN_POSIX1          = 17    # int: POSIX.1 version
-KERN_NGROUPS         = 18    # int: # of supplemental group ids
-KERN_JOB_CONTROL     = 19    # int: is job control available
-KERN_SAVED_IDS       = 20    # int: saved set-user/group-ID
-KERN_BOOTTIME        = 21    # struct: time kernel was booted
-KERN_NISDOMAINNAME   = 22    # string: YP domain name
-KERN_DOMAINNAME      = KERN_NISDOMAINNAME
-KERN_MAXPARTITIONS   = 23    # int: number of partitions/disk
-KERN_KDEBUG          = 24    # int: kernel trace points
-KERN_UPDATEINTERVAL  = 25    # int: update process sleep time
-KERN_OSRELDATE       = 26    # int: OS release date
-KERN_NTP_PLL         = 27    # node: NTP PLL control
-KERN_BOOTFILE        = 28    # string: name of booted kernel
-KERN_MAXFILESPERPROC = 29    # int: max open files per proc
-KERN_MAXPROCPERUID   = 30    # int: max processes per uid
-KERN_DUMPDEV         = 31    # dev_t: device to dump on
-KERN_IPC             = 32    # node: anything related to IPC
-KERN_DUMMY           = 33    # unused
-KERN_PS_STRINGS      = 34    # int: address of PS_STRINGS
-KERN_USRSTACK32      = 35    # int: address of USRSTACK
-KERN_LOGSIGEXIT      = 36    # int: do we log sigexit procs?
-KERN_SYMFILE         = 37    # string: kernel symbol filename
-KERN_PROCARGS        = 38
+KERN_OSTYPE             = 1    # string: system version
+KERN_OSRELEASE          = 2    # string: system release
+KERN_OSREV              = 3    # int: system revision
+KERN_VERSION            = 4    # string: compile time info
+KERN_MAXVNODES          = 5    # int: max vnodes
+KERN_MAXPROC            = 6    # int: max processes
+KERN_MAXFILES           = 7    # int: max open files
+KERN_ARGMAX             = 8    # int: max arguments to exec
+KERN_SECURELVL          = 9    # int: system security level
+KERN_HOSTNAME           = 10    # string: hostname
+KERN_HOSTID             = 11    # int: host identifier
+KERN_CLOCKRATE          = 12    # struct: struct clockrate
+KERN_VNODE              = 13    # struct: vnode structures
+KERN_PROC               = 14    # struct: process entries
+KERN_FILE               = 15    # struct: file entries
+KERN_PROF               = 16    # node: kernel profiling info
+KERN_POSIX1             = 17    # int: POSIX.1 version
+KERN_NGROUPS            = 18    # int: # of supplemental group ids
+KERN_JOB_CONTROL        = 19    # int: is job control available
+KERN_SAVED_IDS          = 20    # int: saved set-user/group-ID
+KERN_BOOTTIME           = 21    # struct: time kernel was booted
+KERN_NISDOMAINNAME      = 22    # string: YP domain name
+KERN_DOMAINNAME         = KERN_NISDOMAINNAME
+KERN_MAXPARTITIONS      = 23    # int: number of partitions/disk
+KERN_KDEBUG             = 24    # int: kernel trace points
+KERN_UPDATEINTERVAL     = 25    # int: update process sleep time
+KERN_OSRELDATE          = 26    # int: OS release date
+KERN_NTP_PLL            = 27    # node: NTP PLL control
+KERN_BOOTFILE           = 28    # string: name of booted kernel
+KERN_MAXFILESPERPROC    = 29    # int: max open files per proc
+KERN_MAXPROCPERUID      = 30    # int: max processes per uid
+KERN_DUMPDEV            = 31    # dev_t: device to dump on
+KERN_IPC                = 32    # node: anything related to IPC
+KERN_DUMMY              = 33    # unused
+KERN_PS_STRINGS         = 34    # int: address of PS_STRINGS
+KERN_USRSTACK32         = 35    # int: address of USRSTACK
+KERN_LOGSIGEXIT         = 36    # int: do we log sigexit procs?
+KERN_SYMFILE            = 37    # string: kernel symbol filename
+KERN_PROCARGS           = 38
 #/* 39 was KERN_PCSAMPLES... now deprecated
-KERN_NETBOOT         = 40    # int: are we netbooted? 1=yes,0=no
-KERN_PANICINFO       = 41    # node: panic UI information
-KERN_SYSV            = 42    # node: System V IPC information
-KERN_AFFINITY        = 43    # xxx
-KERN_TRANSLATE       = 44    # xxx
-KERN_CLASSIC         = KERN_TRANSLATE    # XXX backwards compat
-KERN_EXEC            = 45    # xxx
-KERN_CLASSICHANDLER  = KERN_EXEC # XXX backwards compatibility
-KERN_AIOMAX          = 46    # int: max aio requests
-KERN_AIOPROCMAX      = 47    # int: max aio requests per process
-KERN_AIOTHREADS      = 48    # int: max aio worker threads
-KERN_PROCARGS2       = 49
-KERN_COREFILE        = 50    # string: corefile format string
-KERN_COREDUMP        = 51    # int: whether to coredump at all
-KERN_SUGID_COREDUMP  = 52    # int: whether to dump SUGID cores
-KERN_PROCDELAYTERM   = 53    # int: set/reset current proc for delayed termination during shutdown
+KERN_NETBOOT            = 40    # int: are we netbooted? 1=yes,0=no
+KERN_PANICINFO          = 41    # node: panic UI information
+KERN_SYSV               = 42    # node: System V IPC information
+KERN_AFFINITY           = 43    # xxx
+KERN_TRANSLATE          = 44    # xxx
+KERN_CLASSIC            = KERN_TRANSLATE    # XXX backwards compat
+KERN_EXEC               = 45    # xxx
+KERN_CLASSICHANDLER     = KERN_EXEC # XXX backwards compatibility
+KERN_AIOMAX             = 46    # int: max aio requests
+KERN_AIOPROCMAX         = 47    # int: max aio requests per process
+KERN_AIOTHREADS         = 48    # int: max aio worker threads
+KERN_PROCARGS2          = 49
+KERN_COREFILE           = 50    # string: corefile format string
+KERN_COREDUMP           = 51    # int: whether to coredump at all
+KERN_SUGID_COREDUMP     = 52    # int: whether to dump SUGID cores
+KERN_PROCDELAYTERM      = 53    # int: set/reset current proc for delayed termination during shutdown
 KERN_SHREG_PRIVATIZABLE = 54    # int: can shared regions be privatized ?
-KERN_PROC_LOW_PRI_IO = 55    # int: set/reset current proc for low priority I/O
-KERN_LOW_PRI_WINDOW  = 56    # int: set/reset throttle window - milliseconds
-KERN_LOW_PRI_DELAY   = 57    # int: set/reset throttle delay - milliseconds
-KERN_POSIX           = 58    # node: posix tunables
-KERN_USRSTACK64      = 59    # LP64 user stack query
-KERN_NX_PROTECTION   = 60    # int: whether no-execute protection is enabled
-KERN_TFP             = 61    # Task for pid settings
-KERN_PROCNAME        = 62    # setup process program  name(2*MAXCOMLEN)
-KERN_THALTSTACK      = 63    # for compat with older x86 and does nothing
+KERN_PROC_LOW_PRI_IO    = 55    # int: set/reset current proc for low priority I/O
+KERN_LOW_PRI_WINDOW     = 56    # int: set/reset throttle window - milliseconds
+KERN_LOW_PRI_DELAY      = 57    # int: set/reset throttle delay - milliseconds
+KERN_POSIX              = 58    # node: posix tunables
+KERN_USRSTACK64         = 59    # LP64 user stack query
+KERN_NX_PROTECTION      = 60    # int: whether no-execute protection is enabled
+KERN_TFP                = 61    # Task for pid settings
+KERN_PROCNAME           = 62    # setup process program  name(2*MAXCOMLEN)
+KERN_THALTSTACK         = 63    # for compat with older x86 and does nothing
 KERN_SPECULATIVE_READS  = 64    # int: whether speculative reads are disabled
-KERN_OSVERSION       = 65    # for build number i.e. 9A127
-KERN_SAFEBOOT        = 66    # are we booted safe?
-KERN_LCTX            = 67    # node: login context
-KERN_RAGEVNODE       = 68
-KERN_TTY             = 69    # node: tty settings
-KERN_CHECKOPENEVT    = 70      # spi: check the VOPENEVT flag on vnodes at open time
-KERN_MAXID           = 71    # number of valid kern ids
+KERN_OSVERSION          = 65    # for build number i.e. 9A127
+KERN_SAFEBOOT           = 66    # are we booted safe?
+KERN_LCTX               = 67    # node: login context
+KERN_RAGEVNODE          = 68
+KERN_TTY                = 69    # node: tty settings
+KERN_CHECKOPENEVT       = 70      # spi: check the VOPENEVT flag on vnodes at open time
+KERN_MAXID              = 71    # number of valid kern ids
 # # KERN_RAGEVNODE types
-KERN_RAGE_PROC       = 1
-KERN_RAGE_THREAD     = 2
-KERN_UNRAGE_PROC     = 3
-KERN_UNRAGE_THREAD   = 4
+KERN_RAGE_PROC          = 1
+KERN_RAGE_THREAD        = 2
+KERN_UNRAGE_PROC        = 3
+KERN_UNRAGE_THREAD      = 4
 
 # # KERN_OPENEVT types
-KERN_OPENEVT_PROC    = 1
-KERN_UNOPENEVT_PROC  = 2
+KERN_OPENEVT_PROC       = 1
+KERN_UNOPENEVT_PROC     = 2
 
 # # KERN_TFP types
-KERN_TFP_POLICY      = 1
+KERN_TFP_POLICY         = 1
 
 # # KERN_TFP_POLICY values . All policies allow task port for self
 KERN_TFP_POLICY_DENY    = 0     # Deny Mode: None allowed except privileged
 KERN_TFP_POLICY_DEFAULT = 2    # Default  Mode: related ones allowed and upcall authentication
 
 # # KERN_KDEBUG types
-KERN_KDEFLAGS        = 1
-KERN_KDDFLAGS        = 2
-KERN_KDENABLE        = 3
-KERN_KDSETBUF        = 4
-KERN_KDGETBUF        = 5
-KERN_KDSETUP         = 6
-KERN_KDREMOVE        = 7
-KERN_KDSETREG        = 8
-KERN_KDGETREG        = 9
-KERN_KDREADTR        = 10
-KERN_KDPIDTR         = 11
-KERN_KDTHRMAP        = 12
+KERN_KDEFLAGS           = 1
+KERN_KDDFLAGS           = 2
+KERN_KDENABLE           = 3
+KERN_KDSETBUF           = 4
+KERN_KDGETBUF           = 5
+KERN_KDSETUP            = 6
+KERN_KDREMOVE           = 7
+KERN_KDSETREG           = 8
+KERN_KDGETREG           = 9
+KERN_KDREADTR           = 10
+KERN_KDPIDTR            = 11
+KERN_KDTHRMAP           = 12
 # # Don't use 13 as it is overloaded with KERN_VNODE
-KERN_KDPIDEX         = 14
-KERN_KDSETRTCDEC     = 15
-KERN_KDGETENTROPY    = 16
+KERN_KDPIDEX            = 14
+KERN_KDSETRTCDEC        = 15
+KERN_KDGETENTROPY       = 16
 
 # # KERN_PANICINFO types
 KERN_PANICINFO_MAXSIZE  = 1    # quad: panic UI image size limit
 KERN_PANICINFO_IMAGE    = 2    # panic UI in 8-bit kraw format
 
 # * KERN_PROC subtypes
-KERN_PROC_ALL        = 0    # everything
-KERN_PROC_PID        = 1    # by process id
-KERN_PROC_PGRP       = 2    # by process group id
-KERN_PROC_SESSION    = 3    # by session of pid
-KERN_PROC_TTY        = 4    # by controlling tty
-KERN_PROC_UID        = 5    # by effective uid
-KERN_PROC_RUID       = 6    # by real uid
-KERN_PROC_LCID       = 7    # by login context id
+KERN_PROC_ALL           = 0    # everything
+KERN_PROC_PID           = 1    # by process id
+KERN_PROC_PGRP          = 2    # by process group id
+KERN_PROC_SESSION       = 3    # by session of pid
+KERN_PROC_TTY           = 4    # by controlling tty
+KERN_PROC_UID           = 5    # by effective uid
+KERN_PROC_RUID          = 6    # by real uid
+KERN_PROC_LCID          = 7    # by login context id
 
 # Stupid backwards perms defs...
-VM_PROT_READ	= 1
-VM_PROT_WRITE	= 2
-VM_PROT_EXECUTE	= 4
+VM_PROT_READ            = 1
+VM_PROT_WRITE           = 2
+VM_PROT_EXECUTE         = 4
 
 # Thread status types...
-x86_THREAD_STATE32    = 1
-x86_FLOAT_STATE32     = 2
-x86_EXCEPTION_STATE32 = 3
-x86_THREAD_STATE64    = 4
-x86_FLOAT_STATE64     = 5
-x86_EXCEPTION_STATE64 = 6
-x86_THREAD_STATE      = 7
-x86_FLOAT_STATE       = 8
-x86_EXCEPTION_STATE   = 9
-x86_DEBUG_STATE32     = 10
-x86_DEBUG_STATE64     = 11
-x86_DEBUG_STATE       = 12
-THREAD_STATE_NONE     = 13
+x86_THREAD_STATE32      = 1
+x86_FLOAT_STATE32       = 2
+x86_EXCEPTION_STATE32   = 3
+x86_THREAD_STATE64      = 4
+x86_FLOAT_STATE64       = 5
+x86_EXCEPTION_STATE64   = 6
+x86_THREAD_STATE        = 7
+x86_FLOAT_STATE         = 8
+x86_EXCEPTION_STATE     = 9
+x86_DEBUG_STATE32       = 10
+x86_DEBUG_STATE64       = 11
+x86_DEBUG_STATE         = 12
+THREAD_STATE_NONE       = 13
 
 class X86_STATE_HDR(ctypes.Structure):
     _fields_ = [
