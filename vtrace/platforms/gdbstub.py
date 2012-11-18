@@ -505,7 +505,7 @@ class GdbStubMixin_old(e_registers.RegisterContext):
 
         arch_reg_info = gdb_reg_defs.get(aname)
         if arch_reg_info == None:
-            raise Exception('We dont know the GDB register definition for arch: %s' % name)
+            raise Exception('We dont know the GDB register definition for arch: %s' % aname)
 
         self._arch_regnames, self._arch_regfmt = arch_reg_info
         self._arch_regsize = struct.calcsize(self._arch_regfmt)
