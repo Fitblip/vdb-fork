@@ -198,13 +198,13 @@ class GdbStubMixin:
                     self._gdb_sock.recv(1)
                     self._gdb_sock.sendall('+')
 
-                except socket.timeout, t:
+                except socket.timeout:
                     pass
 
                 self._gdb_sock.settimeout(None)
                 break
 
-            except Exception, e:
+            except Exception:
                 time.sleep(0.2)
                 tries += 1
 

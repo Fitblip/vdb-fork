@@ -32,18 +32,17 @@ from ctypes import *
 
 platdir = os.path.dirname(__file__)
 
-kernel32 = None
-dbghelp = None
-psapi = None
-ntdll = None
-advapi32 = None
-
+kernel32       = None
+dbghelp        = None
+psapi          = None
+ntdll          = None
+advapi32       = None
 IsWow64Process = None
 
 # Setup some ctypes helpers:
 # NOTE: we don't use LPVOID because it can return None.
 #       c_size_t is the designated platform word width int.
-LPVOID = c_size_t
+LPVOID  = c_size_t
 HANDLE  = LPVOID
 SIZE_T  = LPVOID
 QWORD   = c_ulonglong
@@ -53,164 +52,164 @@ BOOL    = c_ulong
 BYTE    = c_ubyte
 NULL    = 0
 
-INFINITE = 0xffffffff
-EXCEPTION_MAXIMUM_PARAMETERS = 15
+INFINITE                           = 0xffffffff
+EXCEPTION_MAXIMUM_PARAMETERS       = 15
 
 # Debug Event Types
-EXCEPTION_DEBUG_EVENT       =1
-CREATE_THREAD_DEBUG_EVENT   =2
-CREATE_PROCESS_DEBUG_EVENT  =3
-EXIT_THREAD_DEBUG_EVENT     =4
-EXIT_PROCESS_DEBUG_EVENT    =5
-LOAD_DLL_DEBUG_EVENT        =6
-UNLOAD_DLL_DEBUG_EVENT      =7
-OUTPUT_DEBUG_STRING_EVENT   =8
-RIP_EVENT                   =9
+EXCEPTION_DEBUG_EVENT              = 1
+CREATE_THREAD_DEBUG_EVENT          = 2
+CREATE_PROCESS_DEBUG_EVENT         = 3
+EXIT_THREAD_DEBUG_EVENT            = 4
+EXIT_PROCESS_DEBUG_EVENT           = 5
+LOAD_DLL_DEBUG_EVENT               = 6
+UNLOAD_DLL_DEBUG_EVENT             = 7
+OUTPUT_DEBUG_STRING_EVENT          = 8
+RIP_EVENT                          = 9
 
 # Symbol Flags
-SYMFLAG_VALUEPRESENT     = 0x00000001
-SYMFLAG_REGISTER         = 0x00000008
-SYMFLAG_REGREL           = 0x00000010
-SYMFLAG_FRAMEREL         = 0x00000020
-SYMFLAG_PARAMETER        = 0x00000040
-SYMFLAG_LOCAL            = 0x00000080
-SYMFLAG_CONSTANT         = 0x00000100
-SYMFLAG_EXPORT           = 0x00000200
-SYMFLAG_FORWARDER        = 0x00000400
-SYMFLAG_FUNCTION         = 0x00000800
-SYMFLAG_VIRTUAL          = 0x00001000
-SYMFLAG_THUNK            = 0x00002000
-SYMFLAG_TLSREL           = 0x00004000
+SYMFLAG_VALUEPRESENT               = 0x00000001
+SYMFLAG_REGISTER                   = 0x00000008
+SYMFLAG_REGREL                     = 0x00000010
+SYMFLAG_FRAMEREL                   = 0x00000020
+SYMFLAG_PARAMETER                  = 0x00000040
+SYMFLAG_LOCAL                      = 0x00000080
+SYMFLAG_CONSTANT                   = 0x00000100
+SYMFLAG_EXPORT                     = 0x00000200
+SYMFLAG_FORWARDER                  = 0x00000400
+SYMFLAG_FUNCTION                   = 0x00000800
+SYMFLAG_VIRTUAL                    = 0x00001000
+SYMFLAG_THUNK                      = 0x00002000
+SYMFLAG_TLSREL                     = 0x00004000
 
 # Symbol Resolution Options
-SYMOPT_CASE_INSENSITIVE         = 0x00000001
-SYMOPT_UNDNAME                  = 0x00000002
-SYMOPT_DEFERRED_LOADS           = 0x00000004
-SYMOPT_NO_CPP                   = 0x00000008
-SYMOPT_LOAD_LINES               = 0x00000010
-SYMOPT_OMAP_FIND_NEAREST        = 0x00000020
-SYMOPT_LOAD_ANYTHING            = 0x00000040
-SYMOPT_IGNORE_CVREC             = 0x00000080
-SYMOPT_NO_UNQUALIFIED_LOADS     = 0x00000100
-SYMOPT_FAIL_CRITICAL_ERRORS     = 0x00000200
-SYMOPT_EXACT_SYMBOLS            = 0x00000400
-SYMOPT_ALLOW_ABSOLUTE_SYMBOLS   = 0x00000800
-SYMOPT_IGNORE_NT_SYMPATH        = 0x00001000
-SYMOPT_INCLUDE_32BIT_MODULES    = 0x00002000
-SYMOPT_PUBLICS_ONLY             = 0x00004000
-SYMOPT_NO_PUBLICS               = 0x00008000
-SYMOPT_AUTO_PUBLICS             = 0x00010000
-SYMOPT_NO_IMAGE_SEARCH          = 0x00020000
-SYMOPT_SECURE                   = 0x00040000
-SYMOPT_NO_PROMPTS               = 0x00080000
-SYMOPT_OVERWRITE                = 0x00100000
-SYMOPT_DEBUG                    = 0x80000000
+SYMOPT_CASE_INSENSITIVE            = 0x00000001
+SYMOPT_UNDNAME                     = 0x00000002
+SYMOPT_DEFERRED_LOADS              = 0x00000004
+SYMOPT_NO_CPP                      = 0x00000008
+SYMOPT_LOAD_LINES                  = 0x00000010
+SYMOPT_OMAP_FIND_NEAREST           = 0x00000020
+SYMOPT_LOAD_ANYTHING               = 0x00000040
+SYMOPT_IGNORE_CVREC                = 0x00000080
+SYMOPT_NO_UNQUALIFIED_LOADS        = 0x00000100
+SYMOPT_FAIL_CRITICAL_ERRORS        = 0x00000200
+SYMOPT_EXACT_SYMBOLS               = 0x00000400
+SYMOPT_ALLOW_ABSOLUTE_SYMBOLS      = 0x00000800
+SYMOPT_IGNORE_NT_SYMPATH           = 0x00001000
+SYMOPT_INCLUDE_32BIT_MODULES       = 0x00002000
+SYMOPT_PUBLICS_ONLY                = 0x00004000
+SYMOPT_NO_PUBLICS                  = 0x00008000
+SYMOPT_AUTO_PUBLICS                = 0x00010000
+SYMOPT_NO_IMAGE_SEARCH             = 0x00020000
+SYMOPT_SECURE                      = 0x00040000
+SYMOPT_NO_PROMPTS                  = 0x00080000
+SYMOPT_OVERWRITE                   = 0x00100000
+SYMOPT_DEBUG                       = 0x80000000
 
 # Exception Types
-EXCEPTION_WAIT_0                     = 0x00000000L    
-EXCEPTION_ABANDONED_WAIT_0           = 0x00000080L    
-EXCEPTION_USER_APC                   = 0x000000C0L    
-EXCEPTION_TIMEOUT                    = 0x00000102L    
-EXCEPTION_PENDING                    = 0x00000103L    
-DBG_EXCEPTION_HANDLED             = 0x00010001L    
-DBG_CONTINUE                      = 0x00010002L    
-EXCEPTION_SEGMENT_NOTIFICATION       = 0x40000005L    
-DBG_TERMINATE_THREAD              = 0x40010003L    
-DBG_TERMINATE_PROCESS             = 0x40010004L    
-DBG_CONTROL_C                     = 0x40010005L    
-DBG_CONTROL_BREAK                 = 0x40010008L    
-DBG_COMMAND_EXCEPTION             = 0x40010009L    
-EXCEPTION_GUARD_PAGE_VIOLATION       = 0x80000001L    
-EXCEPTION_DATATYPE_MISALIGNMENT      = 0x80000002L    
-EXCEPTION_BREAKPOINT                 = 0x80000003L    
-EXCEPTION_SINGLE_STEP                = 0x80000004L    
-DBG_EXCEPTION_NOT_HANDLED         = 0x80010001L    
-EXCEPTION_ACCESS_VIOLATION           = 0xC0000005L    
-EXCEPTION_IN_PAGE_ERROR              = 0xC0000006L    
-EXCEPTION_INVALID_HANDLE             = 0xC0000008L    
-EXCEPTION_NO_MEMORY                  = 0xC0000017L    
-EXCEPTION_ILLEGAL_INSTRUCTION        = 0xC000001DL    
-EXCEPTION_NONCONTINUABLE_EXCEPTION   = 0xC0000025L    
-EXCEPTION_INVALID_DISPOSITION        = 0xC0000026L    
-EXCEPTION_ARRAY_BOUNDS_EXCEEDED      = 0xC000008CL    
-EXCEPTION_FLOAT_DENORMAL_OPERAND     = 0xC000008DL    
-EXCEPTION_FLOAT_DIVIDE_BY_ZERO       = 0xC000008EL    
-EXCEPTION_FLOAT_INEXACT_RESULT       = 0xC000008FL    
-EXCEPTION_FLOAT_INVALID_OPERATION    = 0xC0000090L    
-EXCEPTION_FLOAT_OVERFLOW             = 0xC0000091L    
-EXCEPTION_FLOAT_STACK_CHECK          = 0xC0000092L    
-EXCEPTION_FLOAT_UNDERFLOW            = 0xC0000093L    
-EXCEPTION_INTEGER_DIVIDE_BY_ZERO     = 0xC0000094L    
-EXCEPTION_INTEGER_OVERFLOW           = 0xC0000095L    
-EXCEPTION_PRIVILEGED_INSTRUCTION     = 0xC0000096L    
-EXCEPTION_STACK_OVERFLOW             = 0xC00000FDL    
-EXCEPTION_CONTROL_C_EXIT             = 0xC000013AL    
-EXCEPTION_FLOAT_MULTIPLE_FAULTS      = 0xC00002B4L    
-EXCEPTION_FLOAT_MULTIPLE_TRAPS       = 0xC00002B5L    
-EXCEPTION_REG_NAT_CONSUMPTION        = 0xC00002C9L    
+EXCEPTION_WAIT_0                   = 0x00000000L    
+EXCEPTION_ABANDONED_WAIT_0         = 0x00000080L    
+EXCEPTION_USER_APC                 = 0x000000C0L    
+EXCEPTION_TIMEOUT                  = 0x00000102L    
+EXCEPTION_PENDING                  = 0x00000103L    
+DBG_EXCEPTION_HANDLED              = 0x00010001L    
+DBG_CONTINUE                       = 0x00010002L    
+EXCEPTION_SEGMENT_NOTIFICATION     = 0x40000005L    
+DBG_TERMINATE_THREAD               = 0x40010003L    
+DBG_TERMINATE_PROCESS              = 0x40010004L    
+DBG_CONTROL_C                      = 0x40010005L    
+DBG_CONTROL_BREAK                  = 0x40010008L    
+DBG_COMMAND_EXCEPTION              = 0x40010009L    
+EXCEPTION_GUARD_PAGE_VIOLATION     = 0x80000001L    
+EXCEPTION_DATATYPE_MISALIGNMENT    = 0x80000002L    
+EXCEPTION_BREAKPOINT               = 0x80000003L    
+EXCEPTION_SINGLE_STEP              = 0x80000004L    
+DBG_EXCEPTION_NOT_HANDLED          = 0x80010001L    
+EXCEPTION_ACCESS_VIOLATION         = 0xC0000005L    
+EXCEPTION_IN_PAGE_ERROR            = 0xC0000006L    
+EXCEPTION_INVALID_HANDLE           = 0xC0000008L    
+EXCEPTION_NO_MEMORY                = 0xC0000017L    
+EXCEPTION_ILLEGAL_INSTRUCTION      = 0xC000001DL    
+EXCEPTION_NONCONTINUABLE_EXCEPTION = 0xC0000025L    
+EXCEPTION_INVALID_DISPOSITION      = 0xC0000026L    
+EXCEPTION_ARRAY_BOUNDS_EXCEEDED    = 0xC000008CL    
+EXCEPTION_FLOAT_DENORMAL_OPERAND   = 0xC000008DL    
+EXCEPTION_FLOAT_DIVIDE_BY_ZERO     = 0xC000008EL    
+EXCEPTION_FLOAT_INEXACT_RESULT     = 0xC000008FL    
+EXCEPTION_FLOAT_INVALID_OPERATION  = 0xC0000090L    
+EXCEPTION_FLOAT_OVERFLOW           = 0xC0000091L    
+EXCEPTION_FLOAT_STACK_CHECK        = 0xC0000092L    
+EXCEPTION_FLOAT_UNDERFLOW          = 0xC0000093L    
+EXCEPTION_INTEGER_DIVIDE_BY_ZERO   = 0xC0000094L    
+EXCEPTION_INTEGER_OVERFLOW         = 0xC0000095L    
+EXCEPTION_PRIVILEGED_INSTRUCTION   = 0xC0000096L    
+EXCEPTION_STACK_OVERFLOW           = 0xC00000FDL    
+EXCEPTION_CONTROL_C_EXIT           = 0xC000013AL    
+EXCEPTION_FLOAT_MULTIPLE_FAULTS    = 0xC00002B4L    
+EXCEPTION_FLOAT_MULTIPLE_TRAPS     = 0xC00002B5L    
+EXCEPTION_REG_NAT_CONSUMPTION      = 0xC00002C9L    
 
 # Context Info
-CONTEXT_i386    = 0x00010000    # this assumes that i386 and
-CONTEXT_i486    = 0x00010000    # i486 have identical context records
-CONTEXT_AMD64   = 0x00100000    # For amd x64...
+CONTEXT_i386                       = 0x00010000    # this assumes that i386 and
+CONTEXT_i486                       = 0x00010000    # i486 have identical context records
+CONTEXT_AMD64                      = 0x00100000    # For amd x64...
 
-CONTEXT_CONTROL         = 0x00000001L # SS:SP, CS:IP, FLAGS, BP
-CONTEXT_INTEGER         = 0x00000002L # AX, BX, CX, DX, SI, DI
-CONTEXT_SEGMENTS        = 0x00000004L # DS, ES, FS, GS
-CONTEXT_FLOATING_POINT  = 0x00000008L # 387 state
-CONTEXT_DEBUG_REGISTERS = 0x00000010L # DB 0-3,6,7
-CONTEXT_EXTENDED_REGISTERS  = 0x00000020L # cpu specific extensions
-CONTEXT_FULL = (CONTEXT_CONTROL | CONTEXT_INTEGER | CONTEXT_SEGMENTS)
-CONTEXT_ALL = (CONTEXT_CONTROL | CONTEXT_INTEGER | CONTEXT_SEGMENTS | CONTEXT_FLOATING_POINT | CONTEXT_DEBUG_REGISTERS | CONTEXT_EXTENDED_REGISTERS)
+CONTEXT_CONTROL                    = 0x00000001L # SS:SP, CS:IP, FLAGS, BP
+CONTEXT_INTEGER                    = 0x00000002L # AX, BX, CX, DX, SI, DI
+CONTEXT_SEGMENTS                   = 0x00000004L # DS, ES, FS, GS
+CONTEXT_FLOATING_POINT             = 0x00000008L # 387 state
+CONTEXT_DEBUG_REGISTERS            = 0x00000010L # DB 0-3,6,7
+CONTEXT_EXTENDED_REGISTERS         = 0x00000020L # cpu specific extensions
+CONTEXT_FULL                       = (CONTEXT_CONTROL | CONTEXT_INTEGER | CONTEXT_SEGMENTS)
+CONTEXT_ALL                        = (CONTEXT_CONTROL | CONTEXT_INTEGER | CONTEXT_SEGMENTS | CONTEXT_FLOATING_POINT | CONTEXT_DEBUG_REGISTERS | CONTEXT_EXTENDED_REGISTERS)
 
 
 # Thread Permissions
-THREAD_ALL_ACCESS = 0x001f03ff
-PROCESS_ALL_ACCESS = 0x001f0fff
+THREAD_ALL_ACCESS                  = 0x001f03ff
+PROCESS_ALL_ACCESS                 = 0x001f0fff
 
 # Memory Permissions
-PAGE_NOACCESS = 0x01
-PAGE_READONLY = 0x02
-PAGE_READWRITE = 0x04
-PAGE_WRITECOPY = 0x08
-PAGE_EXECUTE = 0x10
-PAGE_EXECUTE_READ = 0x20
-PAGE_EXECUTE_READWRITE = 0x40
-PAGE_EXECUTE_WRITECOPY = 0x80
-PAGE_GUARD = 0x100
-PAGE_NOCACHE = 0x200
-PAGE_WRITECOMBINE = 0x400
+PAGE_NOACCESS                      = 0x01
+PAGE_READONLY                      = 0x02
+PAGE_READWRITE                     = 0x04
+PAGE_WRITECOPY                     = 0x08
+PAGE_EXECUTE                       = 0x10
+PAGE_EXECUTE_READ                  = 0x20
+PAGE_EXECUTE_READWRITE             = 0x40
+PAGE_EXECUTE_WRITECOPY             = 0x80
+PAGE_GUARD                         = 0x100
+PAGE_NOCACHE                       = 0x200
+PAGE_WRITECOMBINE                  = 0x400
 
 # Map win32 permissions to envi permissions
 perm_lookup = {
-    PAGE_NOACCESS:0,
-    PAGE_READONLY:e_mem.MM_READ,
-    PAGE_READWRITE: e_mem.MM_READ | e_mem.MM_WRITE,
-    PAGE_WRITECOPY: e_mem.MM_READ | e_mem.MM_WRITE,
-    PAGE_EXECUTE: e_mem.MM_EXEC,
-    PAGE_EXECUTE_READ: e_mem.MM_EXEC | e_mem.MM_READ,
-    PAGE_EXECUTE_READWRITE: e_mem.MM_EXEC | e_mem.MM_READ | e_mem.MM_WRITE,
-    PAGE_EXECUTE_WRITECOPY: e_mem.MM_EXEC | e_mem.MM_READ | e_mem.MM_WRITE,
+    PAGE_NOACCESS          : 0,
+    PAGE_READONLY          : e_mem.MM_READ,
+    PAGE_READWRITE         : e_mem.MM_READ | e_mem.MM_WRITE,
+    PAGE_WRITECOPY         : e_mem.MM_READ | e_mem.MM_WRITE,
+    PAGE_EXECUTE           : e_mem.MM_EXEC,
+    PAGE_EXECUTE_READ      : e_mem.MM_EXEC | e_mem.MM_READ,
+    PAGE_EXECUTE_READWRITE : e_mem.MM_EXEC | e_mem.MM_READ | e_mem.MM_WRITE,
+    PAGE_EXECUTE_WRITECOPY : e_mem.MM_EXEC | e_mem.MM_READ | e_mem.MM_WRITE,
 }
 
 # To get win32 permssions from envi permissions
 perm_rev_lookup = {
-    0:PAGE_NOACCESS,
-    e_mem.MM_READ:PAGE_READONLY,
-    e_mem.MM_READ|e_mem.MM_WRITE:PAGE_READWRITE,
-    e_mem.MM_EXEC:PAGE_EXECUTE,
-    e_mem.MM_EXEC|e_mem.MM_READ:PAGE_EXECUTE_READ,
-    e_mem.MM_EXEC|e_mem.MM_READ|e_mem.MM_WRITE:PAGE_EXECUTE_READWRITE,
+    0                                          : PAGE_NOACCESS,
+    e_mem.MM_READ                              : PAGE_READONLY,
+    e_mem.MM_READ|e_mem.MM_WRITE               : PAGE_READWRITE,
+    e_mem.MM_EXEC                              : PAGE_EXECUTE,
+    e_mem.MM_EXEC|e_mem.MM_READ                : PAGE_EXECUTE_READ,
+    e_mem.MM_EXEC|e_mem.MM_READ|e_mem.MM_WRITE : PAGE_EXECUTE_READWRITE,
 }
 
 # Memory States
-MEM_COMMIT = 0x1000
-MEM_FREE = 0x10000
+MEM_COMMIT  = 0x1000
+MEM_FREE    = 0x10000
 MEM_RESERVE = 0x2000
 
 # Memory Types
-MEM_IMAGE = 0x1000000
-MEM_MAPPED = 0x40000
+MEM_IMAGE   = 0x1000000
+MEM_MAPPED  = 0x40000
 MEM_PRIVATE = 0x20000
 
 # Process Creation Flags
@@ -226,42 +225,42 @@ class MSR(Structure):
 
 # The enum of NtSystemDebugControl operations
 SysDbgQueryModuleInformation = 0
-SysDbgQueryTraceInformation = 1
-SysDbgSetTracepoint = 2
-SysDbgSetSpecialCall = 3
-SysDbgClearSpecialCalls = 4
-SysDbgQuerySpecialCalls = 5
-SysDbgBreakPoint = 6
-SysDbgQueryVersion = 7
-SysDbgReadVirtual = 8
-SysDbgWriteVirtual = 9
-SysDbgReadPhysical = 10
-SysDbgWritePhysical = 11
-SysDbgReadControlSpace = 12
-SysDbgWriteControlSpace = 13
-SysDbgReadIoSpace = 14
-SysDbgWriteIoSpace = 15
-SysDbgReadMsr = 16
-SysDbgWriteMsr = 17
-SysDbgReadBusData = 18
-SysDbgWriteBusData = 19
-SysDbgCheckLowMemory = 20
-SysDbgEnableKernelDebugger = 21
-SysDbgDisableKernelDebugger = 22
-SysDbgGetAutoKdEnable = 23
-SysDbgSetAutoKdEnable = 24
-SysDbgGetPrintBufferSize = 25
-SysDbgSetPrintBufferSize = 26
+SysDbgQueryTraceInformation  = 1
+SysDbgSetTracepoint          = 2
+SysDbgSetSpecialCall         = 3
+SysDbgClearSpecialCalls      = 4
+SysDbgQuerySpecialCalls      = 5
+SysDbgBreakPoint             = 6
+SysDbgQueryVersion           = 7
+SysDbgReadVirtual            = 8
+SysDbgWriteVirtual           = 9
+SysDbgReadPhysical           = 10
+SysDbgWritePhysical          = 11
+SysDbgReadControlSpace       = 12
+SysDbgWriteControlSpace      = 13
+SysDbgReadIoSpace            = 14
+SysDbgWriteIoSpace           = 15
+SysDbgReadMsr                = 16
+SysDbgWriteMsr               = 17
+SysDbgReadBusData            = 18
+SysDbgWriteBusData           = 19
+SysDbgCheckLowMemory         = 20
+SysDbgEnableKernelDebugger   = 21
+SysDbgDisableKernelDebugger  = 22
+SysDbgGetAutoKdEnable        = 23
+SysDbgSetAutoKdEnable        = 24
+SysDbgGetPrintBufferSize     = 25
+SysDbgSetPrintBufferSize     = 26
 SysDbgGetKdUmExceptionEnable = 27
 SysDbgSetKdUmExceptionEnable = 28
-SysDbgGetTriageDump = 29
-SysDbgGetKdBlockEnable = 30
-SysDbgSetKdBlockEnable = 31
+SysDbgGetTriageDump          = 29
+SysDbgGetKdBlockEnable       = 30
+SysDbgSetKdBlockEnable       = 31
 SysDbgRegisterForUmBreakInfo = 32
-SysDbgGetUmBreakPid = 33
-SysDbgClearUmBreakPid = 34
-SysDbgGetUmAttachPid = 35
-SysDbgClearUmAttachPid = 36
+SysDbgGetUmBreakPid          = 33
+SysDbgClearUmBreakPid        = 34
+SysDbgGetUmAttachPid         = 35
+SysDbgClearUmAttachPid       = 36
 
 def wrmsr(msrid, value):
     m = MSR()
@@ -286,21 +285,21 @@ def rdmsr(msrid):
         raise vtrace.PlatformException('NtSystemDebugControl Failed: 0x%.8x' % kernel32.GetLastError())
     return m.value
 
-SC_MANAGER_ALL_ACCESS           = 0xF003F
-SC_MANAGER_CREATE_SERVICE       = 0x0002
-SC_MANAGER_CONNECT              = 0x0001
-SC_MANAGER_ENUMERATE_SERVICE    = 0x0004
-SC_MANAGER_LOCK                 = 0x0008
-SC_MANAGER_MODIFY_BOOT_CONFIG   = 0x0020
-SC_MANAGER_QUERY_LOCK_STATUS    = 0x0010
+SC_MANAGER_ALL_ACCESS         = 0xF003F
+SC_MANAGER_CREATE_SERVICE     = 0x0002
+SC_MANAGER_CONNECT            = 0x0001
+SC_MANAGER_ENUMERATE_SERVICE  = 0x0004
+SC_MANAGER_LOCK               = 0x0008
+SC_MANAGER_MODIFY_BOOT_CONFIG = 0x0020
+SC_MANAGER_QUERY_LOCK_STATUS  = 0x0010
 
-SC_ENUM_PROCESS_INFO = 0
+SC_ENUM_PROCESS_INFO          = 0
 
-SERVICE_WIN32       = 0x30
+SERVICE_WIN32                 = 0x30
 
-SERVICE_ACTIVE      = 0x01
-SERVICE_INNACTIVE   = 0x02
-SERVICE_STATE_ALL   = 0x03
+SERVICE_ACTIVE                = 0x01
+SERVICE_INNACTIVE             = 0x02
+SERVICE_STATE_ALL             = 0x03
 
 class SERVICE_STATUS_PROCESS(Structure):
     _fields_ = [
@@ -682,111 +681,111 @@ class IMAGEHLP_STACK_FRAME(Structure):
         ('Reserved2',             DWORD),
     ]
 
-IMAGE_DIRECTORY_ENTRY_EXPORT          =0   # Export Directory
-IMAGE_DIRECTORY_ENTRY_IMPORT          =1   # Import Directory
-IMAGE_DIRECTORY_ENTRY_RESOURCE        =2   # Resource Directory
-IMAGE_DIRECTORY_ENTRY_EXCEPTION       =3   # Exception Directory
-IMAGE_DIRECTORY_ENTRY_SECURITY        =4   # Security Directory
-IMAGE_DIRECTORY_ENTRY_BASERELOC       =5   # Base Relocation Table
-IMAGE_DIRECTORY_ENTRY_DEBUG           =6   # Debug Directory
-IMAGE_DIRECTORY_ENTRY_COPYRIGHT       =7   # (X86 usage)
-IMAGE_DIRECTORY_ENTRY_ARCHITECTURE    =7   # Architecture Specific Data
-IMAGE_DIRECTORY_ENTRY_GLOBALPTR       =8   # RVA of GP
-IMAGE_DIRECTORY_ENTRY_TLS             =9   # TLS Directory
-IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG    =10   # Load Configuration Directory
-IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT   =11   # Bound Import Directory in headers
-IMAGE_DIRECTORY_ENTRY_IAT            =12   # Import Address Table
-IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT   =13   # Delay Load Import Descriptors
-IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR =14   # COM Runtime descriptor
-
-IMAGE_DEBUG_TYPE_UNKNOWN          =0
-IMAGE_DEBUG_TYPE_COFF             =1
-IMAGE_DEBUG_TYPE_CODEVIEW         =2
-IMAGE_DEBUG_TYPE_FPO              =3
-IMAGE_DEBUG_TYPE_MISC             =4
-IMAGE_DEBUG_TYPE_EXCEPTION        =5
-IMAGE_DEBUG_TYPE_FIXUP            =6
-IMAGE_DEBUG_TYPE_OMAP_TO_SRC      =7
-IMAGE_DEBUG_TYPE_OMAP_FROM_SRC    =8
-IMAGE_DEBUG_TYPE_BORLAND          =9
-IMAGE_DEBUG_TYPE_RESERVED10       =10
-IMAGE_DEBUG_TYPE_CLSID            =11
-
-SSRVOPT_CALLBACK            = 0x0001
-SSRVOPT_DWORD               = 0x0002
-SSRVOPT_DWORDPTR            = 0x0004
-SSRVOPT_GUIDPTR             = 0x0008
-SSRVOPT_OLDGUIDPTR          = 0x0010
-SSRVOPT_UNATTENDED          = 0x0020
-SSRVOPT_NOCOPY              = 0x0040
-SSRVOPT_PARENTWIN           = 0x0080
-SSRVOPT_PARAMTYPE           = 0x0100
-SSRVOPT_SECURE              = 0x0200
-SSRVOPT_TRACE               = 0x0400
-SSRVOPT_SETCONTEXT          = 0x0800
-SSRVOPT_PROXY               = 0x1000
-SSRVOPT_DOWNSTREAM_STORE    = 0x2000
-
-TI_GET_SYMTAG                   = 0
-TI_GET_SYMNAME                  = 1
-TI_GET_LENGTH                   = 2
-TI_GET_TYPE                     = 3
-TI_GET_TYPEID                   = 4
-TI_GET_BASETYPE                 = 5
-TI_GET_ARRAYINDEXTYPEID         = 6
-TI_FINDCHILDREN                 = 7
-TI_GET_DATAKIND                 = 8
-TI_GET_ADDRESSOFFSET            = 9
-TI_GET_OFFSET                   = 10
-TI_GET_VALUE                    = 11
-TI_GET_COUNT                    = 12
-TI_GET_CHILDRENCOUNT            = 13
-TI_GET_BITPOSITION              = 14
-TI_GET_VIRTUALBASECLASS         = 15
-TI_GET_VIRTUALTABLESHAPEID      = 16
-TI_GET_VIRTUALBASEPOINTEROFFSET = 17
-TI_GET_CLASSPARENTID            = 18
-TI_GET_NESTED                   = 19
-TI_GET_SYMINDEX                 = 20
-TI_GET_LEXICALPARENT            = 21
-TI_GET_ADDRESS                  = 22
-TI_GET_THISADJUST               = 23
-TI_GET_UDTKIND                  = 24
-TI_IS_EQUIV_TO                  = 25
-TI_GET_CALLING_CONVENTION       = 26
-
-SymTagNull              = 0
-SymTagExe               = 1
-SymTagCompiland         = 2
-SymTagCompilandDetails  = 3
-SymTagCompilandEnv      = 4
-SymTagFunction          = 5
-SymTagBlock             = 6
-SymTagData              = 7
-SymTagAnnotation        = 8
-SymTagLabel             = 9
-SymTagPublicSymbol      = 10
-SymTagUDT               = 11
-SymTagEnum              = 12
-SymTagFunctionType      = 13
-SymTagPointerType       = 14
-SymTagArrayType         = 15
-SymTagBaseType          = 16
-SymTagTypedef           = 17
-SymTagBaseClass         = 18
-SymTagFriend            = 19
-SymTagFunctionArgType   = 20
-SymTagFuncDebugStart    = 21
-SymTagFuncDebugEnd      = 22
-SymTagUsingNamespace    = 23
-SymTagVTableShape       = 24
-SymTagVTable            = 25
-SymTagCustom            = 26
-SymTagThunk             = 27
-SymTagCustomType        = 28
-SymTagManagedType       = 29
-SymTagDimension         = 30
-SymTagMax               = 31
+ IMAGE_DIRECTORY_ENTRY_EXPORT         = 0    # Export Directory
+ IMAGE_DIRECTORY_ENTRY_IMPORT         = 1    # Import Directory
+ IMAGE_DIRECTORY_ENTRY_RESOURCE       = 2    # Resource Directory
+ IMAGE_DIRECTORY_ENTRY_EXCEPTION      = 3    # Exception Directory
+ IMAGE_DIRECTORY_ENTRY_SECURITY       = 4    # Security Directory
+ IMAGE_DIRECTORY_ENTRY_BASERELOC      = 5    # Base Relocation Table
+ IMAGE_DIRECTORY_ENTRY_DEBUG          = 6    # Debug Directory
+ IMAGE_DIRECTORY_ENTRY_COPYRIGHT      = 7    # (X86 usage)
+ IMAGE_DIRECTORY_ENTRY_ARCHITECTURE   = 7    # Architecture Specific Data
+ IMAGE_DIRECTORY_ENTRY_GLOBALPTR      = 8    # RVA of GP
+ IMAGE_DIRECTORY_ENTRY_TLS            = 9    # TLS Directory
+ IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG    = 10   # Load Configuration Directory
+ IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT   = 11   # Bound Import Directory in headers
+ IMAGE_DIRECTORY_ENTRY_IAT            = 12   # Import Address Table
+ IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT   = 13   # Delay Load Import Descriptors
+ IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR = 14   # COM Runtime descriptor
+ 
+ IMAGE_DEBUG_TYPE_UNKNOWN             = 0
+ IMAGE_DEBUG_TYPE_COFF                = 1
+ IMAGE_DEBUG_TYPE_CODEVIEW            = 2
+ IMAGE_DEBUG_TYPE_FPO                 = 3
+ IMAGE_DEBUG_TYPE_MISC                = 4
+ IMAGE_DEBUG_TYPE_EXCEPTION           = 5
+ IMAGE_DEBUG_TYPE_FIXUP               = 6
+ IMAGE_DEBUG_TYPE_OMAP_TO_SRC         = 7
+ IMAGE_DEBUG_TYPE_OMAP_FROM_SRC       = 8
+ IMAGE_DEBUG_TYPE_BORLAND             = 9
+ IMAGE_DEBUG_TYPE_RESERVED10          = 10
+ IMAGE_DEBUG_TYPE_CLSID               = 11
+ 
+ SSRVOPT_CALLBACK                     = 0x0001
+ SSRVOPT_DWORD                        = 0x0002
+ SSRVOPT_DWORDPTR                     = 0x0004
+ SSRVOPT_GUIDPTR                      = 0x0008
+ SSRVOPT_OLDGUIDPTR                   = 0x0010
+ SSRVOPT_UNATTENDED                   = 0x0020
+ SSRVOPT_NOCOPY                       = 0x0040
+ SSRVOPT_PARENTWIN                    = 0x0080
+ SSRVOPT_PARAMTYPE                    = 0x0100
+ SSRVOPT_SECURE                       = 0x0200
+ SSRVOPT_TRACE                        = 0x0400
+ SSRVOPT_SETCONTEXT                   = 0x0800
+ SSRVOPT_PROXY                        = 0x1000
+ SSRVOPT_DOWNSTREAM_STORE             = 0x2000
+ 
+ TI_GET_SYMTAG                        = 0
+ TI_GET_SYMNAME                       = 1
+ TI_GET_LENGTH                        = 2
+ TI_GET_TYPE                          = 3
+ TI_GET_TYPEID                        = 4
+ TI_GET_BASETYPE                      = 5
+ TI_GET_ARRAYINDEXTYPEID              = 6
+ TI_FINDCHILDREN                      = 7
+ TI_GET_DATAKIND                      = 8
+ TI_GET_ADDRESSOFFSET                 = 9
+ TI_GET_OFFSET                        = 10
+ TI_GET_VALUE                         = 11
+ TI_GET_COUNT                         = 12
+ TI_GET_CHILDRENCOUNT                 = 13
+ TI_GET_BITPOSITION                   = 14
+ TI_GET_VIRTUALBASECLASS              = 15
+ TI_GET_VIRTUALTABLESHAPEID           = 16
+ TI_GET_VIRTUALBASEPOINTEROFFSET      = 17
+ TI_GET_CLASSPARENTID                 = 18
+ TI_GET_NESTED                        = 19
+ TI_GET_SYMINDEX                      = 20
+ TI_GET_LEXICALPARENT                 = 21
+ TI_GET_ADDRESS                       = 22
+ TI_GET_THISADJUST                    = 23
+ TI_GET_UDTKIND                       = 24
+ TI_IS_EQUIV_TO                       = 25
+ TI_GET_CALLING_CONVENTION            = 26
+ 
+ SymTagNull                           = 0
+ SymTagExe                            = 1
+ SymTagCompiland                      = 2
+ SymTagCompilandDetails               = 3
+ SymTagCompilandEnv                   = 4
+ SymTagFunction                       = 5
+ SymTagBlock                          = 6
+ SymTagData                           = 7
+ SymTagAnnotation                     = 8
+ SymTagLabel                          = 9
+ SymTagPublicSymbol                   = 10
+ SymTagUDT                            = 11
+ SymTagEnum                           = 12
+ SymTagFunctionType                   = 13
+ SymTagPointerType                    = 14
+ SymTagArrayType                      = 15
+ SymTagBaseType                       = 16
+ SymTagTypedef                        = 17
+ SymTagBaseClass                      = 18
+ SymTagFriend                         = 19
+ SymTagFunctionArgType                = 20
+ SymTagFuncDebugStart                 = 21
+ SymTagFuncDebugEnd                   = 22
+ SymTagUsingNamespace                 = 23
+ SymTagVTableShape                    = 24
+ SymTagVTable                         = 25
+ SymTagCustom                         = 26
+ SymTagThunk                          = 27
+ SymTagCustomType                     = 28
+ SymTagManagedType                    = 29
+ SymTagDimension                      = 30
+ SymTagMax                            = 31
 
 class IMAGE_DEBUG_DIRECTORY(Structure):
     _fields_ = [
@@ -815,19 +814,19 @@ class SYSTEM_HANDLE(Structure):
 PSYSTEM_HANDLE = POINTER(SYSTEM_HANDLE)
 
 # OBJECT_INFORMATION_CLASS
-ObjectBasicInformation      = 0
-ObjectNameInformation       = 1
-ObjectTypeInformation       = 2
-ObjectAllTypesInformation   = 3
-ObjectHandleInformation     = 4
+ObjectBasicInformation    = 0
+ObjectNameInformation     = 1
+ObjectTypeInformation     = 2
+ObjectAllTypesInformation = 3
+ObjectHandleInformation   = 4
 
 # ProcessInformationClass
-ProcessBasicInformation = 0  # Get pointer to PEB
-ProcessDebugPort        = 7  # Get DWORD_PTR to debug port number
-ProcessWow64Information = 26 # Get WOW64 status
+ProcessBasicInformation   = 0  # Get pointer to PEB
+ProcessDebugPort          = 7  # Get DWORD_PTR to debug port number
+ProcessWow64Information   = 26 # Get WOW64 status
 # FIXME may be more reliable to use this! \|/
-ProcessImageFileName    = 27 # Get a UNICODE_STRING of the filename
-ProcessExecuteFlags     = 34 # Get DWORD of execute status (including DEP) (bug: your process only)
+ProcessImageFileName      = 27 # Get a UNICODE_STRING of the filename
+ProcessExecuteFlags       = 34 # Get DWORD of execute status (including DEP) (bug: your process only)
 
 class UNICODE_STRING(Structure):
     _fields_ = (
@@ -844,18 +843,18 @@ class OBJECT_TYPE_INFORMATION(Structure):
     )
 
 object_type_map = {
-    "File":vtrace.FD_FILE,
-    "Directory":vtrace.FD_FILE,
-    "Event":vtrace.FD_EVENT,
-    "KeyedEvent":vtrace.FD_EVENT,
-    "Mutant":vtrace.FD_LOCK,
-    "Semaphore":vtrace.FD_LOCK,
-    "Key":vtrace.FD_REGKEY,
-    "Port":vtrace.FD_UNKNOWN,
-    "Section":vtrace.FD_UNKNOWN,
-    "IoCompletion":vtrace.FD_UNKNOWN,
-    "Desktop":vtrace.FD_UNKNOWN,
-    "WindowStation":vtrace.FD_UNKNOWN,
+    "File"          :vtrace.FD_FILE,
+    "Directory"     :vtrace.FD_FILE,
+    "Event"         :vtrace.FD_EVENT,
+    "KeyedEvent"    :vtrace.FD_EVENT,
+    "Mutant"        :vtrace.FD_LOCK,
+    "Semaphore"     :vtrace.FD_LOCK,
+    "Key"           :vtrace.FD_REGKEY,
+    "Port"          :vtrace.FD_UNKNOWN,
+    "Section"       :vtrace.FD_UNKNOWN,
+    "IoCompletion"  :vtrace.FD_UNKNOWN,
+    "Desktop"       :vtrace.FD_UNKNOWN,
+    "WindowStation" :vtrace.FD_UNKNOWN,
 }
 
 class LUID(Structure):
@@ -875,84 +874,79 @@ class TOKEN_PRIVILEGES(Structure):
 # All platforms must be able to import this module (for exceptions etc..)
 # (do this stuff *after* we define some types...)
 if sys.platform == "win32":
-
-    kernel32 = windll.kernel32
     # We need to inform some of the APIs about their args
-    kernel32.OpenProcess.argtypes = [DWORD, BOOL, DWORD]
-    kernel32.OpenProcess.restype = HANDLE
-    kernel32.CreateProcessA.argtypes = [LPVOID, c_char_p, LPVOID, LPVOID, c_uint, DWORD, LPVOID, LPVOID, LPVOID, LPVOID]
-    kernel32.ReadProcessMemory.argtypes = [HANDLE, LPVOID, LPVOID, SIZE_T, LPVOID]
-    kernel32.WriteProcessMemory.argtypes = [HANDLE, LPVOID, c_char_p, SIZE_T, LPVOID]
-    kernel32.GetThreadContext.argtypes = [HANDLE, LPVOID]
-    kernel32.SetThreadContext.argtypes = [HANDLE, LPVOID]
-    kernel32.CreateRemoteThread.argtypes = [HANDLE, LPVOID, SIZE_T, LPVOID, LPVOID, DWORD, LPVOID]
-    kernel32.SuspendThread.argtypes = [HANDLE,]
-    kernel32.ResumeThread.argtypes = [HANDLE,]
-    kernel32.VirtualQueryEx.argtypes = [HANDLE, LPVOID, LPVOID, SIZE_T]
-    kernel32.DebugBreakProcess.argtypes = [HANDLE,]
-    kernel32.CloseHandle.argtypes = [HANDLE,]
+    kernel32                                  = windll.kernel32
+    kernel32.OpenProcess.argtypes             = [DWORD, BOOL, DWORD]
+    kernel32.OpenProcess.restype              = HANDLE
+    kernel32.CreateProcessA.argtypes          = [LPVOID, c_char_p, LPVOID, LPVOID, c_uint, DWORD, LPVOID, LPVOID, LPVOID, LPVOID]
+    kernel32.ReadProcessMemory.argtypes       = [HANDLE, LPVOID, LPVOID, SIZE_T, LPVOID]
+    kernel32.WriteProcessMemory.argtypes      = [HANDLE, LPVOID, c_char_p, SIZE_T, LPVOID]
+    kernel32.GetThreadContext.argtypes        = [HANDLE, LPVOID]
+    kernel32.SetThreadContext.argtypes        = [HANDLE, LPVOID]
+    kernel32.CreateRemoteThread.argtypes      = [HANDLE, LPVOID, SIZE_T, LPVOID, LPVOID, DWORD, LPVOID]
+    kernel32.SuspendThread.argtypes           = [HANDLE,]
+    kernel32.ResumeThread.argtypes            = [HANDLE,]
+    kernel32.VirtualQueryEx.argtypes          = [HANDLE, LPVOID, LPVOID, SIZE_T]
+    kernel32.DebugBreakProcess.argtypes       = [HANDLE,]
+    kernel32.CloseHandle.argtypes             = [HANDLE,]
     kernel32.GetLogicalDriveStringsA.argtypes = [DWORD, LPVOID]
-    kernel32.TerminateProcess.argtypes = [HANDLE, DWORD]
-    kernel32.VirtualProtectEx.argtypes = [HANDLE, LPVOID, SIZE_T, DWORD, LPVOID]
-    kernel32.VirtualAllocEx.argtypes = [HANDLE, LPVOID, SIZE_T, DWORD, DWORD]
-    kernel32.VirtualFreeEx.argtypes = [HANDLE, LPVOID, SIZE_T, DWORD]
-    kernel32.DuplicateHandle.argtypes = [HANDLE, HANDLE, HANDLE, LPVOID, DWORD, DWORD, DWORD]
-    kernel32.SetEvent.argtypes = [HANDLE, ]
+    kernel32.TerminateProcess.argtypes        = [HANDLE, DWORD]
+    kernel32.VirtualProtectEx.argtypes        = [HANDLE, LPVOID, SIZE_T, DWORD, LPVOID]
+    kernel32.VirtualAllocEx.argtypes          = [HANDLE, LPVOID, SIZE_T, DWORD, DWORD]
+    kernel32.VirtualFreeEx.argtypes           = [HANDLE, LPVOID, SIZE_T, DWORD]
+    kernel32.DuplicateHandle.argtypes         = [HANDLE, HANDLE, HANDLE, LPVOID, DWORD, DWORD, DWORD]
+    kernel32.SetEvent.argtypes                = [HANDLE, ]
 
     IsWow64Process = getattr(kernel32, 'IsWow64Process', None)
     if IsWow64Process != None:
         IsWow64Process.argtypes = [HANDLE, LPVOID]
 
-
-
-    psapi = windll.psapi
-    psapi.GetModuleFileNameExW.argtypes = [HANDLE, HANDLE, LPVOID, DWORD]
-    psapi.GetMappedFileNameW.argtypes = [HANDLE, LPVOID, LPVOID, DWORD]
-
-    ntdll = windll.ntdll
-    ntdll.NtQuerySystemInformation.argtypes = [DWORD, LPVOID, DWORD, LPVOID]
-    ntdll.NtQueryObject.argtypes = [HANDLE, DWORD, c_void_p, DWORD, LPVOID]
+    psapi                                    = windll.psapi
+    psapi.GetModuleFileNameExW.argtypes      = [HANDLE, HANDLE, LPVOID, DWORD]
+    psapi.GetMappedFileNameW.argtypes        = [HANDLE, LPVOID, LPVOID, DWORD]
+    
+    ntdll                                    = windll.ntdll
+    ntdll.NtQuerySystemInformation.argtypes  = [DWORD, LPVOID, DWORD, LPVOID]
+    ntdll.NtQueryObject.argtypes             = [HANDLE, DWORD, c_void_p, DWORD, LPVOID]
     ntdll.NtQueryInformationProcess.argtypes = [HANDLE, DWORD, c_void_p, DWORD, LPVOID]
-    ntdll.NtSystemDebugControl.restype = SIZE_T
-
+    ntdll.NtSystemDebugControl.restype       = SIZE_T
 
     try:
-
-        SYMCALLBACK = WINFUNCTYPE(BOOL, POINTER(SYMBOL_INFO), c_ulong, LPVOID)
-        PDBCALLBACK = WINFUNCTYPE(BOOL, c_char_p, LPVOID)
-
-        arch_name = envi.getCurrentArch()
-        symsrv = windll.LoadLibrary(os.path.join(platdir, "windll", arch_name, "symsrv.dll"))
-        dbghelp = windll.LoadLibrary(os.path.join(platdir, "windll", arch_name, "dbghelp.dll"))
-        dbghelp.SymInitialize.argtypes = [HANDLE, c_char_p, BOOL]
-        dbghelp.SymInitialize.restype = BOOL
-        dbghelp.SymSetOptions.argtypes = [DWORD]
-        dbghelp.SymSetOptions.restype = DWORD
-        dbghelp.SymCleanup.argtypes = [HANDLE]
-        dbghelp.SymCleanup.restype = BOOL
-        dbghelp.SymLoadModule64.argtypes = [HANDLE, HANDLE, c_char_p, c_char_p, QWORD, DWORD]
-        dbghelp.SymLoadModule64.restype = QWORD
+        SYMCALLBACK                         = WINFUNCTYPE(BOOL, POINTER(SYMBOL_INFO), c_ulong, LPVOID)
+        PDBCALLBACK                         = WINFUNCTYPE(BOOL, c_char_p, LPVOID)
+        
+        arch_name                           = envi.getCurrentArch()
+        symsrv                              = windll.LoadLibrary(os.path.join(platdir, "windll", arch_name, "symsrv.dll"))
+        dbghelp                             = windll.LoadLibrary(os.path.join(platdir, "windll", arch_name, "dbghelp.dll"))
+        dbghelp.SymInitialize.argtypes      = [HANDLE, c_char_p, BOOL]
+        dbghelp.SymInitialize.restype       = BOOL
+        dbghelp.SymSetOptions.argtypes      = [DWORD]
+        dbghelp.SymSetOptions.restype       = DWORD
+        dbghelp.SymCleanup.argtypes         = [HANDLE]
+        dbghelp.SymCleanup.restype          = BOOL
+        dbghelp.SymLoadModule64.argtypes    = [HANDLE, HANDLE, c_char_p, c_char_p, QWORD, DWORD]
+        dbghelp.SymLoadModule64.restype     = QWORD
         dbghelp.SymGetModuleInfo64.argtypes = [HANDLE, QWORD, POINTER(IMAGEHLP_MODULE64)]
-        dbghelp.SymSetContext.restype = BOOL
-        dbghelp.SymSetContext.argtypes = [ HANDLE, POINTER(IMAGEHLP_STACK_FRAME), LPVOID ]
-        dbghelp.SymGetModuleInfo64.restype = BOOL
-        dbghelp.SymEnumSymbols.argtypes = [HANDLE, QWORD, c_char_p, SYMCALLBACK, LPVOID]
-        dbghelp.SymEnumSymbols.restype = BOOL
-        dbghelp.SymEnumTypes.argtypes = [HANDLE, QWORD, SYMCALLBACK, LPVOID]
-        dbghelp.SymEnumTypes.restype = BOOL
-        dbghelp.SymGetTypeInfo.argtypes = [HANDLE, QWORD, DWORD, DWORD, c_void_p]
-        dbghelp.SymGetTypeInfo.restype = BOOL
-        dbghelp.SymFromAddr.argtypes = [HANDLE, QWORD, POINTER(QWORD), POINTER(SYMBOL_INFO) ]
+        dbghelp.SymSetContext.restype       = BOOL
+        dbghelp.SymSetContext.argtypes      = [ HANDLE, POINTER(IMAGEHLP_STACK_FRAME), LPVOID ]
+        dbghelp.SymGetModuleInfo64.restype  = BOOL
+        dbghelp.SymEnumSymbols.argtypes     = [HANDLE, QWORD, c_char_p, SYMCALLBACK, LPVOID]
+        dbghelp.SymEnumSymbols.restype      = BOOL
+        dbghelp.SymEnumTypes.argtypes       = [HANDLE, QWORD, SYMCALLBACK, LPVOID]
+        dbghelp.SymEnumTypes.restype        = BOOL
+        dbghelp.SymGetTypeInfo.argtypes     = [HANDLE, QWORD, DWORD, DWORD, c_void_p]
+        dbghelp.SymGetTypeInfo.restype      = BOOL
+        dbghelp.SymFromAddr.argtypes        = [HANDLE, QWORD, POINTER(QWORD), POINTER(SYMBOL_INFO) ]
 
     except Exception, e:
         print "WARNING: Failed to import dbghelp/symsrv: %s" % e
 
-    advapi32 = windll.advapi32
+    advapi32                                = windll.advapi32
     advapi32.LookupPrivilegeValueA.argtypes = [LPVOID, c_char_p, LPVOID]
-    advapi32.OpenProcessToken.argtypes = [HANDLE, DWORD, HANDLE]
+    advapi32.OpenProcessToken.argtypes      = [HANDLE, DWORD, HANDLE]
     advapi32.AdjustTokenPrivileges.argtypes = [HANDLE, DWORD, LPVOID, DWORD, LPVOID, LPVOID]
-    advapi32.OpenSCManagerA.argtypes = [ LPVOID, LPVOID, DWORD ]
-    advapi32.OpenSCManagerA.restype = HANDLE
+    advapi32.OpenSCManagerA.argtypes        = [ LPVOID, LPVOID, DWORD ]
+    advapi32.OpenSCManagerA.restype         = HANDLE
     advapi32.EnumServicesStatusExW.argtypes = [ HANDLE,
                                                 LPVOID,
                                                 DWORD,
@@ -963,11 +957,11 @@ if sys.platform == "win32":
                                                 LPVOID,
                                                 LPVOID,
                                                 LPVOID ]
-    advapi32.EnumServicesStatusExW.restype = BOOL
-    advapi32.CloseServiceHandle.argtypes = [ HANDLE, ]
-    advapi32.CloseServiceHandle.restype = BOOL
-    advapi32.GetTokenInformation.argtypes = [HANDLE, DWORD, LPVOID, DWORD, LPVOID]
-    advapi32.GetTokenInformation.restype = BOOL
+    advapi32.EnumServicesStatusExW.restype  = BOOL
+    advapi32.CloseServiceHandle.argtypes    = [ HANDLE, ]
+    advapi32.CloseServiceHandle.restype     = BOOL
+    advapi32.GetTokenInformation.argtypes   = [HANDLE, DWORD, LPVOID, DWORD, LPVOID]
+    advapi32.GetTokenInformation.restype    = BOOL
 
 
 def getServicesList():
@@ -1014,8 +1008,8 @@ def getServicesList():
         p = cast(buf, POINTER(ENUM_SERVICE_STATUS_PROCESS))
 
         for i in xrange(dwSvcCount.value):
-            pid = p[i].ServiceStatusProcess.dwProcessId
-            name = p[i].lpServiceName
+            pid   = p[i].ServiceStatusProcess.dwProcessId
+            name  = p[i].lpServiceName
             descr = p[i].lpDisplayName
             ret.append((pid, name, descr))
 
@@ -1039,46 +1033,46 @@ BOOL WINAPI EnumServicesStatusEx(
 );
 '''
 
-SE_PRIVILEGE_ENABLED    = 0x00000002
-TOKEN_ADJUST_PRIVILEGES = 0x00000020
-TOKEN_QUERY             = 0x00000008
-dbgprivdone = False
+SE_PRIVILEGE_ENABLED       = 0x00000002
+TOKEN_ADJUST_PRIVILEGES    = 0x00000020
+TOKEN_QUERY                = 0x00000008
+dbgprivdone                = False
 
 # TOKEN_INFORMATION_CLASS
-TokenUser                   = 1
-TokenGroups                 = 2
-TokenPrivileges             = 3
-TokenOwner                  = 4
-TokenPrimaryGroup           = 5
-TokenDefaultDacl            = 6
-TokenSource                 = 7
-TokenType                   = 8
-TokenImpersonationLevel     = 9
-TokenStatistics             = 10
-TokenRestrictedSids         = 11
-TokenSessionId              = 12
-TokenGroupsAndPrivileges    = 13
-TokenSessionReference       = 14
-TokenSandBoxInert           = 15
-TokenAuditPolicy            = 16
-TokenOrigin                 = 17
-TokenElevationType          = 18
-TokenLinkedToken            = 19
-TokenElevation              = 20
-TokenHasRestrictions        = 21
-TokenAccessInformation      = 22
-TokenVirtualizationAllowed  = 23
-TokenVirtualizationEnabled  = 24
-TokenIntegrityLevel         = 25
-TokenUIAccess               = 26
-TokenMandatoryPolicy        = 27
-TokenLogonSid               = 28
-MaxTokenInfoClass           = 29
+TokenUser                  = 1
+TokenGroups                = 2
+TokenPrivileges            = 3
+TokenOwner                 = 4
+TokenPrimaryGroup          = 5
+TokenDefaultDacl           = 6
+TokenSource                = 7
+TokenType                  = 8
+TokenImpersonationLevel    = 9
+TokenStatistics            = 10
+TokenRestrictedSids        = 11
+TokenSessionId             = 12
+TokenGroupsAndPrivileges   = 13
+TokenSessionReference      = 14
+TokenSandBoxInert          = 15
+TokenAuditPolicy           = 16
+TokenOrigin                = 17
+TokenElevationType         = 18
+TokenLinkedToken           = 19
+TokenElevation             = 20
+TokenHasRestrictions       = 21
+TokenAccessInformation     = 22
+TokenVirtualizationAllowed = 23
+TokenVirtualizationEnabled = 24
+TokenIntegrityLevel        = 25
+TokenUIAccess              = 26
+TokenMandatoryPolicy       = 27
+TokenLogonSid              = 28
+MaxTokenInfoClass          = 29
 
 # TOKEN_ELEVATION_TYPE
-TokenElevationTypeDefault   = 1
-TokenElevationTypeFull      = 2
-TokenElevationTypeLimited   = 3
+TokenElevationTypeDefault  = 1
+TokenElevationTypeFull     = 2
+TokenElevationTypeLimited  = 3
 
 def getTokenElevationType(handle=-1):
 
@@ -1154,19 +1148,19 @@ class WindowsMixin:
 
     def __init__(self):
 
-        self.casesens = False
-
-        self.phandle = None
-        self.thandles = {}
+        self.casesens     = False
+        
+        self.phandle      = None
+        self.thandles     = {}
         self.win32threads = {}
-        self.dosdevs = []
-        self.flushcache = False
-        self.faultaddr = None
+        self.dosdevs      = []
+        self.flushcache   = False
+        self.faultaddr    = None
         global dbgprivdone
         if not dbgprivdone:
             dbgprivdone = getDebugPrivileges()
 
-        self._is_wow64 = False  # 64 bit trace uses this...
+        self._is_wow64      = False # 64 bit trace uses this...
         self._step_suspends = set() # Threads we have suspended for single stepping
 
         # Skip the attach event and plow through to the first
@@ -1206,10 +1200,10 @@ class WindowsMixin:
         for x in range(hinfo.Count):
             if hinfo.Handles[x].ProcessID != self.pid:
                 continue
-            hand = hinfo.Handles[x].HandleNumber
-            myhand = self.dupHandle(hand)
+            hand    = hinfo.Handles[x].HandleNumber
+            myhand  = self.dupHandle(hand)
             typestr = self.getHandleInfo(myhand, ObjectTypeInformation)
-            wait = False
+            wait    = False
             if typestr == "File":
                 wait = True
             namestr = self.getHandleInfo(myhand, ObjectNameInformation, wait=wait)
@@ -1762,9 +1756,9 @@ class WindowsAmd64Trace(
         return c
 
 reserved = {
-    'None': True,
-    'True': True,
-    'False': True,
+    'None'  : True,
+    'True'  : True,
+    'False' : True,
 }
 
 VT_EMPTY    = 0 
@@ -1811,14 +1805,14 @@ class VARIANT(Structure):
 class Win32SymbolParser:
 
     def __init__(self, phandle, filename, loadbase, sympath=None):
-        self.phandle = phandle
-        self.filename = filename
-        self.loadbase = loadbase
-        self.sympath = sympath
-        self.symbols = []
-        self.symopts = (SYMOPT_UNDNAME | SYMOPT_NO_PROMPTS | SYMOPT_NO_CPP)
-        self._sym_types = {}
-        self._sym_enums = {}
+        self.phandle     = phandle
+        self.filename    = filename
+        self.loadbase    = loadbase
+        self.sympath     = sympath
+        self.symbols     = []
+        self.symopts     = (SYMOPT_UNDNAME | SYMOPT_NO_PROMPTS | SYMOPT_NO_CPP)
+        self._sym_types  = {}
+        self._sym_enums  = {}
         self._sym_locals = {}
 
     def printSymbolInfo(self, info):
@@ -1914,7 +1908,7 @@ class Win32SymbolParser:
         kids = []
         for child in self._symGetChildren(tidx):
             kidname = self.symGetTypeName(child)
-            kidval = self.symGetTypeValue(child)
+            kidval  = self.symGetTypeValue(child)
             kidname = self._fixKidName(kidname)
             kids.append((kidname, kidval))
 
@@ -1924,30 +1918,30 @@ class Win32SymbolParser:
         size = self.symGetTypeLength(tidx)
         kids = []
         for child in self._symGetChildren(tidx):
-            kidname = self.symGetTypeName(child)
-            kidoff = self.symGetTypeOffset(child)
-            ktype = self.symGetTypeType(child)
-            ksize = self.symGetTypeLength(ktype)
-            ktag = self.symGetTypeTag(ktype)
-
-            kidname = self._fixKidName(kidname)
-            kflags = 0
+            kidname   = self.symGetTypeName(child)
+            kidoff    = self.symGetTypeOffset(child)
+            ktype     = self.symGetTypeType(child)
+            ksize     = self.symGetTypeLength(ktype)
+            ktag      = self.symGetTypeTag(ktype)
+            
+            kidname   = self._fixKidName(kidname)
+            kflags    = 0
             ktypename = None
-            kcount = None
+            kcount    = None
 
             if ktag == SymTagPointerType:
-                kflags |= vs_builder.VSFF_POINTER
-                ptype = self.symGetTypeType(ktype)
+                kflags   |= vs_builder.VSFF_POINTER
+                ptype     = self.symGetTypeType(ktype)
                 ktypename = self.symGetTypeName(ptype)
 
             elif ktag == SymTagArrayType:
-                atype = self.symGetTypeType(ktype)
-                asize = self.symGetTypeLength(atype)
+                atype  = self.symGetTypeType(ktype)
+                asize  = self.symGetTypeLength(atype)
                 kcount = ksize / asize
 
                 # Now, we setup our *child* to be the type
                 ktypename = self.symGetTypeName(atype)
-                ksize = asize
+                ksize     = asize
 
                 if self.symGetTypeTag(atype) == SymTagPointerType:
                     kflags |= vs_builder.VSFF_POINTER
