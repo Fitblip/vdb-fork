@@ -1,6 +1,5 @@
 import envi.registers as e_reg
 import envi.archs.i386 as e_i386
-import envi.archs.amd64 as e_amd64
 
 # NOTE: all REX_R registers must *directly* follow their 3 bit variants
 #       in the table below
@@ -41,71 +40,71 @@ l = locals()
 e_reg.addLocalEnums(l, amd64regs)
 
 amd64meta = e_i386.i386meta + [
-    ("eax", e_amd64.REG_RAX, 0, 32),
-    ("ecx", e_amd64.REG_RCX, 0, 32),
-    ("edx", e_amd64.REG_RDX, 0, 32),
-    ("ebx", e_amd64.REG_RBX, 0, 32),
-    ("esp", e_amd64.REG_RSP, 0, 32),
-    ("ebp", e_amd64.REG_RBP, 0, 32),
-    ("esi", e_amd64.REG_RSI, 0, 32),
-    ("edi", e_amd64.REG_RDI, 0, 32),
+    ("eax", REG_RAX, 0, 32),
+    ("ecx", REG_RCX, 0, 32),
+    ("edx", REG_RDX, 0, 32),
+    ("ebx", REG_RBX, 0, 32),
+    ("esp", REG_RSP, 0, 32),
+    ("ebp", REG_RBP, 0, 32),
+    ("esi", REG_RSI, 0, 32),
+    ("edi", REG_RDI, 0, 32),
 
-    ("ax", e_amd64.REG_RAX, 0, 16),
-    ("cx", e_amd64.REG_RCX, 0, 16),
-    ("dx", e_amd64.REG_RDX, 0, 16),
-    ("bx", e_amd64.REG_RBX, 0, 16),
-    ("sp", e_amd64.REG_RSP, 0, 16),
-    ("bp", e_amd64.REG_RBP, 0, 16),
-    ("si", e_amd64.REG_RSI, 0, 16),
-    ("di", e_amd64.REG_RDI, 0, 16),
+    ("ax", REG_RAX, 0, 16),
+    ("cx", REG_RCX, 0, 16),
+    ("dx", REG_RDX, 0, 16),
+    ("bx", REG_RBX, 0, 16),
+    ("sp", REG_RSP, 0, 16),
+    ("bp", REG_RBP, 0, 16),
+    ("si", REG_RSI, 0, 16),
+    ("di", REG_RDI, 0, 16),
 
-    ("al", e_amd64.REG_RAX, 0, 8),
-    ("cl", e_amd64.REG_RCX, 0, 8),
-    ("dl", e_amd64.REG_RDX, 0, 8),
-    ("bl", e_amd64.REG_RBX, 0, 8),
+    ("al", REG_RAX, 0, 8),
+    ("cl", REG_RCX, 0, 8),
+    ("dl", REG_RDX, 0, 8),
+    ("bl", REG_RBX, 0, 8),
 
-    ("ah", e_amd64.REG_RAX, 8, 8),
-    ("ch", e_amd64.REG_RCX, 8, 8),
-    ("dh", e_amd64.REG_RDX, 8, 8),
-    ("bh", e_amd64.REG_RBX, 8, 8),
+    ("ah", REG_RAX, 8, 8),
+    ("ch", REG_RCX, 8, 8),
+    ("dh", REG_RDX, 8, 8),
+    ("bh", REG_RBX, 8, 8),
 
     # NOTE: with a REX prefix, all ah/ch regs get
     # mapped back to being sil/dil etc...
-    ("spl", e_amd64.REG_RSP, 8, 8),
-    ("bpl", e_amd64.REG_RBP, 8, 8),
-    ("sil", e_amd64.REG_RSI, 8, 8),
-    ("dil", e_amd64.REG_RDI, 8, 8),
+    ("spl", REG_RSP, 8, 8),
+    ("bpl", REG_RBP, 8, 8),
+    ("sil", REG_RSI, 8, 8),
+    ("dil", REG_RDI, 8, 8),
 
     # The new GP e_amd64.regs are accessible in all modes.
-    ("r8d",  e_amd64.REG_R8,  0, 32),
-    ("r9d",  e_amd64.REG_R9,  0, 32),
-    ("r10d", e_amd64.REG_R10, 0, 32),
-    ("r11d", e_amd64.REG_R11, 0, 32),
-    ("r12d", e_amd64.REG_R12, 0, 32),
-    ("r13d", e_amd64.REG_R13, 0, 32),
-    ("r14d", e_amd64.REG_R14, 0, 32),
-    ("r15d", e_amd64.REG_R15, 0, 32),
+    ("r8d",  REG_R8,  0, 32),
+    ("r9d",  REG_R9,  0, 32),
+    ("r10d", REG_R10, 0, 32),
+    ("r11d", REG_R11, 0, 32),
+    ("r12d", REG_R12, 0, 32),
+    ("r13d", REG_R13, 0, 32),
+    ("r14d", REG_R14, 0, 32),
+    ("r15d", REG_R15, 0, 32),
 
-    ("r8w",  e_amd64.REG_R8,  0, 16),
-    ("r9w",  e_amd64.REG_R9,  0, 16),
-    ("r10w", e_amd64.REG_R10, 0, 16),
-    ("r11w", e_amd64.REG_R11, 0, 16),
-    ("r12w", e_amd64.REG_R12, 0, 16),
-    ("r13w", e_amd64.REG_R13, 0, 16),
-    ("r14w", e_amd64.REG_R14, 0, 16),
-    ("r15w", e_amd64.REG_R15, 0, 16),
+    ("r8w",  REG_R8,  0, 16),
+    ("r9w",  REG_R9,  0, 16),
+    ("r10w", REG_R10, 0, 16),
+    ("r11w", REG_R11, 0, 16),
+    ("r12w", REG_R12, 0, 16),
+    ("r13w", REG_R13, 0, 16),
+    ("r14w", REG_R14, 0, 16),
+    ("r15w", REG_R15, 0, 16),
 
-    ("r8l",  e_amd64.REG_R8,  0, 8),
-    ("r9l",  e_amd64.REG_R9,  0, 8),
-    ("r10l", e_amd64.REG_R10, 0, 8),
-    ("r11l", e_amd64.REG_R11, 0, 8),
-    ("r12l", e_amd64.REG_R12, 0, 8),
-    ("r13l", e_amd64.REG_R13, 0, 8),
-    ("r14l", e_amd64.REG_R14, 0, 8),
-    ("r15l", e_amd64.REG_R15, 0, 8),
+    ("r8l",  REG_R8,  0, 8),
+    ("r9l",  REG_R9,  0, 8),
+    ("r10l", REG_R10, 0, 8),
+    ("r11l", REG_R11, 0, 8),
+    ("r12l", REG_R12, 0, 8),
+    ("r13l", REG_R13, 0, 8),
+    ("r14l", REG_R14, 0, 8),
+    ("r15l", REG_R15, 0, 8),
 
     # Flags
-    ("TF", e_amd64.REG_EFLAGS, 8, 1),
+    ("TF", REG_EFLAGS, 8, 1),
 ]
 
 # Add the meta's indexes
@@ -117,7 +116,7 @@ class Amd64RegisterContext(e_reg.RegisterContext):
     def __init__(self):
         self.loadRegDef(amd64regs)
         self.loadRegMetas(amd64meta)
-        self.setRegisterIndexes(e_amd64.REG_RIP, e_amd64.REG_RSP)
+        self.setRegisterIndexes(REG_RIP, REG_RSP)
 
     def setRegister(self, index, value):
         # NOTE: A special override is needed here because setting "eax" automagicall
