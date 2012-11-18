@@ -87,7 +87,7 @@ class AndroidArmTrace(
 
             return v_gdbstub.GdbStubMixin.platformAttach(self, pid)
 
-        except Exception, e:
+        except Exception:
 
             if self.gdbserver:
                 self.gdbserver.kill()
@@ -159,7 +159,7 @@ def getTrace(avd=None):
         if len(lines) <= 2:
             print('Warning: "adb devices" didnt see an Android device, start/attach one!')
 
-    except Exception, e:
+    except Exception:
         raise Exception('Android "adb" command *must* be in your path!')
 
     return AndroidArmTrace(avd)
