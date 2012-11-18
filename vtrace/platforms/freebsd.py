@@ -3,6 +3,7 @@ FreeBSD support...
 """
 
 import os
+import sys
 import ctypes
 import ctypes.util as cutil
 
