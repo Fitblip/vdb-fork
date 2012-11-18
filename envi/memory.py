@@ -205,7 +205,7 @@ class IMemory:
         maptup = self.getMemoryMap(va)
         if maptup == None:
             return False
-        return bool(maptup[2] & MM_SHAR)
+        return bool(maptup[2] & MM_SHARED)
 
 
     def searchMemory(self, needle, regex=False):
