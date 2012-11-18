@@ -475,7 +475,7 @@ class ArmModule(envi.ArchitectureModule):
 
         # If we don't know the encoding by here, we never will ;)
         if enc == None:
-            raise InvalidInstruction("omg")
+            raise envi.InvalidInstruction("omg")
 
         #print "ENCFAM",encfam
         #print "COND",cond
