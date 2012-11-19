@@ -335,12 +335,26 @@ class ResourceDirectory:
         return self._rsrc_data
 
 class PE(object):
+    """
+    The PE object is what gets returned after asking for a PE from any
+    of the ways possible 
+
+    :class:`PE.peFromBytes`, :class:`PE.peFromFileName`, or 
+    :class:`PE.peFromMemoryObject`
+    
+    :param fd: A file descriptor open with 'rb' (read binary)
+    :type fd: file descriptor
+    :param inmem: Whether our PE is actually loaded into memory, or a real file
+    :type baseaddr: bool 
+    :returns: an instance of itself. Duh. 
+    :rtype: :class:`PE.PE`
+    """
+    """ # ORIGINAL DOCSTRING
+    Construct a PE object.  use inmem=True if you are
+    using a MemObjFile or other "memory like" image.
+    """
 
     def __init__(self, fd, inmem=False):
-        """
-        Construct a PE object.  use inmem=True if you are
-        using a MemObjFile or other "memory like" image.
-        """
         object.__init__(self)
         self.inmem = inmem
 
@@ -369,9 +383,19 @@ class PE(object):
         self.IMAGE_NT_HEADERS = nt
 
     def getPdataEntries(self):
+        """
+        Parse out the PE's .pdata section bytes. 
+
+        No parameters, just uses :class:`PE.getSectionByName` to get and parse .pdata 
+        entries. 
+
+        If the section doesn't exist, returns an empty tuple. 
+        
+        :returns: list of items found
+        """
         sec = self.getSectionByName('.pdata')
         if sec == None:
-            return ()
+            return []
         ret = []
         rbytes = self.readAtRva(sec.VirtualAddress, sec.VirtualSize)
         while len(rbytes):
@@ -382,10 +406,12 @@ class PE(object):
         return ret
 
     def getDllName(self):
-        '''
+        """
         Return the "dll name" from the Name field of the IMAGE_EXPORT_DIRECTORY
         if one is present.  If not, return None.
-        '''
+        :returns: dll name
+        :rtype: str
+        """
         if self.IMAGE_EXPORT_DIRECTORY != None:
             rawname = self.readAtRva(self.IMAGE_EXPORT_DIRECTORY.Name, 32)
             return rawname.split('\x00')[0]
@@ -395,27 +421,41 @@ class PE(object):
         """
         Return the list of import tuples for this PE.  The tuples
         are in the format (rva, libname, funcname).
+        :returns: List of import tuples
+        :rtype: list
         """
         return self.imports
 
     def getExports(self):
-
         """
         Return the list of exports in this PE.  The list contains
         tuples in the format; (rva, ord, name).
+        :returns: List of export tuples
+        :rtype: list
         """
         return self.exports
 
     def getForwarders(self):
         """
-        [ (rva, name, forwardname), ... ]
+        Return the list of forwarders in this PE.  The list contains
+        tuples in the format; (rva, name, forwardname).
+        :returns: List of forwarders
+        :rtype: list
         """
         return self.forwarders
 
     def getSections(self):
+        """
+        Return the list of sections in this PE in VStruct format. 
+        :returns: List of sections
+        :rtype: list
+        """
         return self.sections
 
     def rvaToOffset(self, rva):
+        """
+        #TODO this guy, is this the relative virtual address? Me thinks so...
+        """
         if self.inmem:
             return rva
 
@@ -427,6 +467,15 @@ class PE(object):
         return 0
 
     def getSectionByName(self, name):
+        """
+        Find the structure based off it's name. 
+        :param fd: A file descriptor open with 'rb' (read binary)
+        :type fd: file descriptor
+        :param inmem: Whether our PE is actually loaded into memory, or a real file
+        :type baseaddr: bool 
+        :returns: an instance of itself. Duh. 
+        :rtype: :class:`PE.PE`
+        """
         for s in self.getSections():
             if s.Name.split("\x00", 1)[0] == name:
                 return s
@@ -855,7 +904,18 @@ class PE(object):
 
 class MemObjFile:
     """
-    A file like object that wraps a MemoryObject (envi) compatable
+    A helper class to act as a file object, mainly used by :class:`PE.peFromMemoryObject`. 
+    The seek() function sets the current virtual address.
+
+    Implements seek(),read() and write() functions for :class:`PE.PE` to read
+
+    :param memobj: Our memory object (trace object)
+    :type memobj: :class:`vtrace.Trace`
+    :param baseaddr: Base address for our PE
+    :type baseaddr: long 
+    """
+    """ 
+    A file like object that wraps a MemoryObject (envi) compatible
     object with a file-like object where seek == VA.
     """
 
@@ -877,11 +937,45 @@ class MemObjFile:
         self.offset += len(bytes)
 
 def peFromMemoryObject(memobj, baseaddr):
+    """
+    Returns a PE class for a string of bytes. Basically just passes 
+    your bytes into a StringIO() and hands that off to :class:`PE.PE`
+
+    Example:
+
+    >>> # Import vtrace and PE
+    >>> import vtrace, PE
+    >>> # Initilize our vtrace.Trace object
+    >>> trace = vtrace.getTrace()
+    >>> # Get our library bases
+    >>> libBase = trace.getMeta("LibraryBases")
+    >>> # Get the first address of our first entry (not realistic)
+    >>> base = libBase.items()[0][1]
+    >>> # Create our PE.PE()
+    >>> p = PE.peFromMemoryObject(trace, base)
+
+
+    :param memobj: Our memory object (trace object)
+    :type memobj: :class:`vtrace.Trace`
+    :param baseaddr: Base address for our PE
+    :type baseaddr: long 
+    :returns: :class:`PE.PE` instance of the specified PE (with inmem=True). 
+    :rtype: :class:`PE.PE`
+    """
     fd = MemObjFile(memobj, baseaddr)
     return PE(fd, inmem=True)
 
 def peFromFileName(fname):
     """
+    Returns a PE class for a specified file path. Makes sure to open 
+    the file in "rb" mode to read binary.
+
+    :param fname: The filename of our PE.
+    :type fname: str.
+    :returns: :class:`PE.PE` instance of the specified PE. 
+    :rtype: :class:`PE.PE`
+    """
+    """ # ORIGINAL DOCSTRING
     Utility helper that assures that the file is opened in 
     binary mode which is required for proper functioning.
     """
@@ -889,6 +983,15 @@ def peFromFileName(fname):
     return PE(f)
 
 def peFromBytes(fbytes):
+    """
+    Returns a PE class for a string of bytes. Basically just passes 
+    your bytes into a StringIO() and hands that off to :class:`PE.PE`
+
+    :param fbytes: The bytestring for our PE. 
+    :type fbytes: str.
+    :returns: :class:`PE.PE` instance of the specified PE. 
+    :rtype: :class:`PE.PE`
+    """
     fd = StringIO(fbytes)
     return PE(fd)
 
