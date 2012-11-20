@@ -486,7 +486,7 @@ class Elf(vs_elf.Elf32, vs_elf.Elf64):
             rvaoff = rva - phrva
             return pgm.p_offset + rvaoff
 
-        raise 'omg',hex(rva)
+        raise Exception('omg => ' + hex(rva))
         return None
 
     def readAtOffset(self, off, size):
