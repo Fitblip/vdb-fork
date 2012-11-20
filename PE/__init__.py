@@ -409,6 +409,7 @@ class PE(object):
         """
         Return the "dll name" from the Name field of the IMAGE_EXPORT_DIRECTORY
         if one is present.  If not, return None.
+
         :returns: dll name
         :rtype: str
         """
@@ -421,6 +422,7 @@ class PE(object):
         """
         Return the list of import tuples for this PE.  The tuples
         are in the format (rva, libname, funcname).
+
         :returns: List of import tuples
         :rtype: list
         """
@@ -430,6 +432,7 @@ class PE(object):
         """
         Return the list of exports in this PE.  The list contains
         tuples in the format; (rva, ord, name).
+
         :returns: List of export tuples
         :rtype: list
         """
@@ -439,6 +442,7 @@ class PE(object):
         """
         Return the list of forwarders in this PE.  The list contains
         tuples in the format; (rva, name, forwardname).
+
         :returns: List of forwarders
         :rtype: list
         """
@@ -447,6 +451,7 @@ class PE(object):
     def getSections(self):
         """
         Return the list of sections in this PE in VStruct format. 
+
         :returns: List of sections
         :rtype: list
         """
@@ -454,7 +459,13 @@ class PE(object):
 
     def rvaToOffset(self, rva):
         """
-        #TODO this guy, is this the relative virtual address? Me thinks so...
+        Resolve relative-virtual-address => offset for PE sections. Given a RVA, 
+        returns an offset from the current location.
+
+        :param rva: Relative Virtual Address to resolve
+        :type rva: long
+        :returns: Pointer to data
+        :rtype: long
         """
         if self.inmem:
             return rva
@@ -469,12 +480,11 @@ class PE(object):
     def getSectionByName(self, name):
         """
         Find the structure based off it's name. 
-        :param fd: A file descriptor open with 'rb' (read binary)
-        :type fd: file descriptor
-        :param inmem: Whether our PE is actually loaded into memory, or a real file
-        :type baseaddr: bool 
-        :returns: an instance of itself. Duh. 
-        :rtype: :class:`PE.PE`
+
+        :param name: A file descriptor open with 'rb' (read binary)
+        :type name: string
+        :returns: a vstruct header section
+        :rtype: :class:`vstruct.defs.pe.IMAGE_SECTION_HEADER`
         """
         for s in self.getSections():
             if s.Name.split("\x00", 1)[0] == name:
