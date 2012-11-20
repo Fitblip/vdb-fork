@@ -49,8 +49,8 @@ visgraph Package
     :undoc-members:
     :show-inheritance:
 
-Subpackages
------------
+Submodules
+----------
 
 .. toctree::
 

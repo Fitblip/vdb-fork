@@ -1008,77 +1008,8 @@ the flags to un-defined as well.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-envi.archs.arm.thumb">
-<span id="thumb-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">thumb</span></tt> Module<a class="headerlink" href="#module-envi.archs.arm.thumb" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="envi.archs.arm.thumb.ThumbOpcode">
-<em class="property">class </em><tt class="descclassname">envi.archs.arm.thumb.</tt><tt class="descname">ThumbOpcode</tt><big>(</big><em>va</em>, <em>opcode</em>, <em>mnem</em>, <em>prefixes</em>, <em>size</em>, <em>operands</em>, <em>iflags=0</em><big>)</big><a class="reference internal" href="_modules/envi/archs/arm/thumb.html#ThumbOpcode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#envi.archs.arm.thumb.ThumbOpcode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#envi.archs.arm.armdisasm.ArmOpcode" title="envi.archs.arm.armdisasm.ArmOpcode"><tt class="xref py py-class docutils literal"><span class="pre">envi.archs.arm.armdisasm.ArmOpcode</span></tt></a></p>
-</dd></dl>
-
-<dl class="function">
-<dt id="envi.archs.arm.thumb.d1_rm4_rd3">
-<tt class="descclassname">envi.archs.arm.thumb.</tt><tt class="descname">d1_rm4_rd3</tt><big>(</big><em>va</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/envi/archs/arm/thumb.html#d1_rm4_rd3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#envi.archs.arm.thumb.d1_rm4_rd3" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="envi.archs.arm.thumb.imm5_rn_rt">
-<tt class="descclassname">envi.archs.arm.thumb.</tt><tt class="descname">imm5_rn_rt</tt><big>(</big><em>va</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/envi/archs/arm/thumb.html#imm5_rn_rt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#envi.archs.arm.thumb.imm5_rn_rt" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="envi.archs.arm.thumb.is_thumb32">
-<tt class="descclassname">envi.archs.arm.thumb.</tt><tt class="descname">is_thumb32</tt><big>(</big><em>val</em><big>)</big><a class="reference internal" href="_modules/envi/archs/arm/thumb.html#is_thumb32"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#envi.archs.arm.thumb.is_thumb32" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take a 16 bit integer (opcode) value and determine
-if it is really the first 16 bits of a 32 bit
-instruction.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="envi.archs.arm.thumb.ldmia">
-<tt class="descclassname">envi.archs.arm.thumb.</tt><tt class="descname">ldmia</tt><big>(</big><em>va</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/envi/archs/arm/thumb.html#ldmia"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#envi.archs.arm.thumb.ldmia" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="envi.archs.arm.thumb.rd_pc_imm8">
-<tt class="descclassname">envi.archs.arm.thumb.</tt><tt class="descname">rd_pc_imm8</tt><big>(</big><em>va</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/envi/archs/arm/thumb.html#rd_pc_imm8"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#envi.archs.arm.thumb.rd_pc_imm8" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="envi.archs.arm.thumb.rd_sp_imm8">
-<tt class="descclassname">envi.archs.arm.thumb.</tt><tt class="descname">rd_sp_imm8</tt><big>(</big><em>va</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/envi/archs/arm/thumb.html#rd_sp_imm8"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#envi.archs.arm.thumb.rd_sp_imm8" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="envi.archs.arm.thumb.rm_reglist">
-<tt class="descclassname">envi.archs.arm.thumb.</tt><tt class="descname">rm_reglist</tt><big>(</big><em>va</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/envi/archs/arm/thumb.html#rm_reglist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#envi.archs.arm.thumb.rm_reglist" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="envi.archs.arm.thumb.rm_rn_rt">
-<tt class="descclassname">envi.archs.arm.thumb.</tt><tt class="descname">rm_rn_rt</tt><big>(</big><em>va</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/envi/archs/arm/thumb.html#rm_rn_rt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#envi.archs.arm.thumb.rm_rn_rt" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="envi.archs.arm.thumb.rt_pc_imm8">
-<tt class="descclassname">envi.archs.arm.thumb.</tt><tt class="descname">rt_pc_imm8</tt><big>(</big><em>va</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/envi/archs/arm/thumb.html#rt_pc_imm8"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#envi.archs.arm.thumb.rt_pc_imm8" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="envi.archs.arm.thumb.shmaskval">
-<tt class="descclassname">envi.archs.arm.thumb.</tt><tt class="descname">shmaskval</tt><big>(</big><em>value</em>, <em>shval</em>, <em>mask</em><big>)</big><a class="reference internal" href="_modules/envi/archs/arm/thumb.html#shmaskval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#envi.archs.arm.thumb.shmaskval" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="class">
-<dt id="envi.archs.arm.thumb.simpleops">
-<em class="property">class </em><tt class="descclassname">envi.archs.arm.thumb.</tt><tt class="descname">simpleops</tt><big>(</big><em>*operdef</em><big>)</big><a class="reference internal" href="_modules/envi/archs/arm/thumb.html#simpleops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#envi.archs.arm.thumb.simpleops" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="envi.archs.arm.thumb.sp_sp_imm7">
-<tt class="descclassname">envi.archs.arm.thumb.</tt><tt class="descname">sp_sp_imm7</tt><big>(</big><em>va</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/envi/archs/arm/thumb.html#sp_sp_imm7"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#envi.archs.arm.thumb.sp_sp_imm7" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<div class="section" id="thumb-module">
+<h2><tt class="xref py py-mod docutils literal"><span class="pre">thumb</span></tt> Module<a class="headerlink" href="#thumb-module" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="module-envi.archs.arm.thumbdisasm">
 <span id="thumbdisasm-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">thumbdisasm</span></tt> Module<a class="headerlink" href="#module-envi.archs.arm.thumbdisasm" title="Permalink to this headline">¶</a></h2>
@@ -1179,7 +1110,7 @@ instruction.</p>
 <li><a class="reference internal" href="#module-envi.archs.arm.disasm"><tt class="docutils literal"><span class="pre">disasm</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-envi.archs.arm.emu"><tt class="docutils literal"><span class="pre">emu</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-envi.archs.arm.regs"><tt class="docutils literal"><span class="pre">regs</span></tt> Module</a></li>
-<li><a class="reference internal" href="#module-envi.archs.arm.thumb"><tt class="docutils literal"><span class="pre">thumb</span></tt> Module</a></li>
+<li><a class="reference internal" href="#thumb-module"><tt class="docutils literal"><span class="pre">thumb</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-envi.archs.arm.thumbdisasm"><tt class="docutils literal"><span class="pre">thumbdisasm</span></tt> Module</a></li>
 </ul>
 </li>
