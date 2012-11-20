@@ -1,6 +1,14 @@
 envi Package
 ============
 
+.. warning::
+
+    The documentation for envi hasn't been touched yet! If you want to contribute (or have ideas for better documentation), feel free to `send me a pull request`_ or `email me`_.
+
+.. _send me a pull request: https://github.com/Fitblip/vdb-fork
+.. _email me: https://github.com/Fitblip
+
+
 :mod:`envi` Package
 -------------------
 
@@ -129,8 +137,8 @@ envi Package
     :undoc-members:
     :show-inheritance:
 
-Subpackages
------------
+Submodules
+----------
 
 .. toctree::
 

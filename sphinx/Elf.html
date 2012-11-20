@@ -48,6 +48,10 @@
             
   <div class="section" id="elf-package">
 <h1>Elf Package<a class="headerlink" href="#elf-package" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The documentation for Elf hasn&#8217;t been touched yet! If you want to contribute (or have ideas for better documentation), feel free to <a class="reference external" href="https://github.com/Fitblip/vdb-fork">send me a pull request</a> or <a class="reference external" href="https://github.com/Fitblip">email me</a>.</p>
+</div>
 <div class="section" id="id1">
 <h2><a class="reference internal" href="#module-Elf" title="Elf"><tt class="xref py py-mod docutils literal"><span class="pre">Elf</span></tt></a> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-Elf"></span><p>Kenshoto&#8217;s Elf parser</p>
@@ -389,6 +393,83 @@ entry.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="Elf.elfFromBytes">
+<tt class="descclassname">Elf.</tt><tt class="descname">elfFromBytes</tt><big>(</big><em>fbytes</em><big>)</big><a class="headerlink" href="#Elf.elfFromBytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a Elf class for a string of bytes. Basically just passes 
+your bytes into a StringIO() and hands that off to <a class="reference internal" href="#Elf.Elf" title="Elf.Elf"><tt class="xref py py-class docutils literal"><span class="pre">Elf.Elf</span></tt></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fbytes</strong> (<em>str.</em>) &#8211; The bytestring comprising the Elf.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#Elf.Elf" title="Elf.Elf"><tt class="xref py py-class docutils literal"><span class="pre">Elf.Elf</span></tt></a> instance of the specified Elf.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#Elf.Elf" title="Elf.Elf"><tt class="xref py py-class docutils literal"><span class="pre">Elf.Elf</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Elf.elfFromFileName">
+<tt class="descclassname">Elf.</tt><tt class="descname">elfFromFileName</tt><big>(</big><em>fname</em><big>)</big><a class="headerlink" href="#Elf.elfFromFileName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an Elf class for a specified file path. Makes sure to open 
+the file in &#8220;rb&#8221; mode to read binary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fname</strong> (<em>str.</em>) &#8211; The filename of our Elf.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><a class="reference internal" href="#Elf.Elf" title="Elf.Elf"><tt class="xref py py-class docutils literal"><span class="pre">Elf.Elf</span></tt></a> instance of the specified Elf.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#Elf.Elf" title="Elf.Elf"><tt class="xref py py-class docutils literal"><span class="pre">Elf.Elf</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Elf.elfFromMemoryObject">
+<tt class="descclassname">Elf.</tt><tt class="descname">elfFromMemoryObject</tt><big>(</big><em>memobj</em>, <em>baseaddr</em><big>)</big><a class="headerlink" href="#Elf.elfFromMemoryObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a Elf class for a string of bytes. Basically just passes 
+your bytes into a StringIO() and hands that off to <a class="reference internal" href="#Elf.Elf" title="Elf.Elf"><tt class="xref py py-class docutils literal"><span class="pre">Elf.Elf</span></tt></a></p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Import vtrace and Elf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">vtrace</span><span class="o">,</span> <span class="nn">Elf</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Initilize our vtrace.Trace object</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">vtrace</span><span class="o">.</span><span class="n">getTrace</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;/path/to/program&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Get our library bases</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">libBase</span> <span class="o">=</span> <span class="n">trace</span><span class="o">.</span><span class="n">getMeta</span><span class="p">(</span><span class="s">&quot;LibraryBases&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Get the first address of our first entry (not realistic)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">base</span> <span class="o">=</span> <span class="n">libBase</span><span class="o">.</span><span class="n">items</span><span class="p">()[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Create our Elf.Elf()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">Elf</span><span class="o">.</span><span class="n">peFromMemoryObject</span><span class="p">(</span><span class="n">trace</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>memobj</strong> (<a class="reference internal" href="vtrace.html#vtrace.Trace" title="vtrace.Trace"><tt class="xref py py-class docutils literal"><span class="pre">vtrace.Trace</span></tt></a>) &#8211; Our memory object (trace object)</li>
+<li><strong>baseaddr</strong> (<em>long</em>) &#8211; Base address for our Elf</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><a class="reference internal" href="#Elf.Elf" title="Elf.Elf"><tt class="xref py py-class docutils literal"><span class="pre">Elf.Elf</span></tt></a> instance of the specified Elf (with inmem=True).</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#Elf.Elf" title="Elf.Elf"><tt class="xref py py-class docutils literal"><span class="pre">Elf.Elf</span></tt></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="Elf.getRelocSymTabIndex">
 <tt class="descclassname">Elf.</tt><tt class="descname">getRelocSymTabIndex</tt><big>(</big><em>val</em><big>)</big><a class="reference internal" href="_modules/Elf.html#getRelocSymTabIndex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#Elf.getRelocSymTabIndex" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -401,6 +482,7 @@ entry.</p>
 </div>
 <div class="section" id="module-Elf.elf_lookup">
 <span id="elf-lookup-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">elf_lookup</span></tt> Module<a class="headerlink" href="#module-Elf.elf_lookup" title="Permalink to this headline">¶</a></h2>
+<p>ELF static definitions</p>
 </div>
 </div>
 

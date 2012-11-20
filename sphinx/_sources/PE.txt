@@ -1,6 +1,13 @@
 PE Package
 ==========
 
+.. warning::
+
+    The documentation for PE isn't quite finished yet! If you want to contribute (or have ideas for better documentation), feel free to `send me a pull request`_ or `email me`_.
+
+.. _send me a pull request: https://github.com/Fitblip/vdb-fork
+.. _email me: https://github.com/Fitblip
+
 :mod:`PE` Package
 -----------------
 
@@ -32,8 +39,8 @@ PE Package
     :undoc-members:
     :show-inheritance:
 
-Subpackages
------------
+Submodules
+----------
 
 .. toctree::
 
