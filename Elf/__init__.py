@@ -643,3 +643,57 @@ def getRelocType(val):
 def getRelocSymTabIndex(val):
     return val >> 8
 
+def elfFromMemoryObject(memobj, baseaddr):
+    """
+    Returns a Elf class for a string of bytes. Basically just passes 
+    your bytes into a StringIO() and hands that off to :class:`Elf.Elf`
+
+    Example:
+
+    >>> # Import vtrace and Elf
+    >>> import vtrace, Elf
+    >>> # Initilize our vtrace.Trace object
+    >>> trace = vtrace.getTrace()
+    >>> trace.execute('/path/to/program')
+    >>> # Get our library bases
+    >>> libBase = trace.getMeta("LibraryBases")
+    >>> # Get the first address of our first entry (not realistic)
+    >>> base = libBase.items()[0][1]
+    >>> # Create our Elf.Elf()
+    >>> p = Elf.peFromMemoryObject(trace, base)
+
+    :param memobj: Our memory object (trace object)
+    :type memobj: :class:`vtrace.Trace`
+    :param baseaddr: Base address for our Elf
+    :type baseaddr: long 
+    :returns: :class:`Elf.Elf` instance of the specified Elf (with inmem=True). 
+    :rtype: :class:`Elf.Elf`
+    """
+    fd = MemObjFile(memobj, baseaddr)
+    return Elf(fd, inmem=True)
+
+def elfFromFileName(fname):
+    """
+    Returns an Elf class for a specified file path. Makes sure to open 
+    the file in "rb" mode to read binary.
+
+    :param fname: The filename of our Elf.
+    :type fname: str.
+    :returns: :class:`Elf.Elf` instance of the specified Elf. 
+    :rtype: :class:`Elf.Elf`
+    """
+    f = file(fname, "rb")
+    return Elf(f)
+
+def elfFromBytes(fbytes):
+    """
+    Returns a Elf class for a string of bytes. Basically just passes 
+    your bytes into a StringIO() and hands that off to :class:`Elf.Elf`
+
+    :param fbytes: The bytestring comprising the Elf. 
+    :type fbytes: str.
+    :returns: :class:`Elf.Elf` instance of the specified Elf. 
+    :rtype: :class:`Elf.Elf`
+    """
+    fd = StringIO(fbytes)
+    return Elf(fd)

@@ -947,6 +947,7 @@ def peFromMemoryObject(memobj, baseaddr):
     >>> import vtrace, PE
     >>> # Initilize our vtrace.Trace object
     >>> trace = vtrace.getTrace()
+    >>> trace.execute('C:\\Path\\To\\Program\\blah.exe')
     >>> # Get our library bases
     >>> libBase = trace.getMeta("LibraryBases")
     >>> # Get the first address of our first entry (not realistic)
