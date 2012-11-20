@@ -8,7 +8,7 @@ VDB Package
 .. _send me a pull request: https://github.com/Fitblip/vdb-fork
 .. _email me: https://github.com/Fitblip
 
-:mod:`vdb` Package
+:mod:`VDB` Package
 ------------------
 
 .. automodule:: vdb
@@ -16,7 +16,7 @@ VDB Package
     :undoc-members:
     :show-inheritance:
 
-:mod:`renderers` Module
+:mod:`Renderers` Module
 -----------------------
 
 .. automodule:: vdb.renderers

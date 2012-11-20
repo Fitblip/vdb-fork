@@ -8,6 +8,10 @@ I'm going to attempt to fix a bug or two I've stumbled across, and maybe come up
 # Major differences
 - Issue #1 fixed, by using `v_uint16()` instead of `v_bytes(2)` for the Magic optional header, which now gives the correct value
 - Changed vstruct.VStruct class's `__repr__()` method to something I think is a bit easier to read when exploring
+- Added findOpcode() to Trace object, which allows you to search for an opcode by mnemonic 
+- Added helper functions for ELF like PE has
+- Added new definitions to Elf/elf_lookup and reformatted to be easier to read/understand
+
 
 #Intro
 

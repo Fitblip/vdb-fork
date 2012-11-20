@@ -50,7 +50,7 @@
 <h1>PE Package<a class="headerlink" href="#pe-package" title="Permalink to this headline">¶</a></h1>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">The documentation for PE isn&#8217;t quite finished yet! If you want to contribute (or have ideas for better documentation), feel free to <a href="#id2"><span class="problematic" id="id3">`send me a pull request`_</span></a> or <a href="#id4"><span class="problematic" id="id5">`email me`_</span></a>.</p>
+<p class="last">The documentation for PE isn&#8217;t quite finished yet! If you want to contribute (or have ideas for better documentation), feel free to <a class="reference external" href="https://github.com/Fitblip/vdb-fork">send me a pull request</a> or <a class="reference external" href="https://github.com/Fitblip">email me</a>.</p>
 </div>
 <div class="section" id="id1">
 <h2><a class="reference internal" href="#module-PE" title="PE"><tt class="xref py py-mod docutils literal"><span class="pre">PE</span></tt></a> Package<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
@@ -91,9 +91,17 @@ for the file.  (also make sure it&#8217;s not 0...)</p>
 <dt id="PE.PE.getDllName">
 <tt class="descname">getDllName</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PE.html#PE.getDllName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PE.PE.getDllName" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the &#8220;dll name&#8221; from the Name field of the IMAGE_EXPORT_DIRECTORY
-if one is present.  If not, return None.
-:returns: dll name
-:rtype: str</p>
+if one is present.  If not, return None.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dll name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -107,27 +115,51 @@ if one is present.  If not, return None.
 <dt id="PE.PE.getExports">
 <tt class="descname">getExports</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PE.html#PE.getExports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PE.PE.getExports" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the list of exports in this PE.  The list contains
-tuples in the format; (rva, ord, name).
-:returns: List of export tuples
-:rtype: list</p>
+tuples in the format; (rva, ord, name).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of export tuples</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="PE.PE.getForwarders">
 <tt class="descname">getForwarders</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PE.html#PE.getForwarders"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PE.PE.getForwarders" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the list of forwarders in this PE.  The list contains
-tuples in the format; (rva, name, forwardname).
-:returns: List of forwarders
-:rtype: list</p>
+tuples in the format; (rva, name, forwardname).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of forwarders</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="PE.PE.getImports">
 <tt class="descname">getImports</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PE.html#PE.getImports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PE.PE.getImports" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the list of import tuples for this PE.  The tuples
-are in the format (rva, libname, funcname).
-:returns: List of import tuples
-:rtype: list</p>
+are in the format (rva, libname, funcname).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of import tuples</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -170,21 +202,35 @@ resource in the PE.</p>
 <dl class="method">
 <dt id="PE.PE.getSectionByName">
 <tt class="descname">getSectionByName</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="_modules/PE.html#PE.getSectionByName"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PE.PE.getSectionByName" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find the structure based off it&#8217;s name. 
-:param fd: A file descriptor open with &#8216;rb&#8217; (read binary)
-:type fd: file descriptor
-:param inmem: Whether our PE is actually loaded into memory, or a real file
-:type baseaddr: bool 
-:returns: an instance of itself. Duh. 
-:rtype: <a class="reference internal" href="#PE.PE" title="PE.PE"><tt class="xref py py-class docutils literal"><span class="pre">PE.PE</span></tt></a></p>
+<dd><p>Find the structure based off it&#8217;s name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) &#8211; A file descriptor open with &#8216;rb&#8217; (read binary)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a vstruct header section</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="vstruct.defs.html#vstruct.defs.pe.IMAGE_SECTION_HEADER" title="vstruct.defs.pe.IMAGE_SECTION_HEADER"><tt class="xref py py-class docutils literal"><span class="pre">vstruct.defs.pe.IMAGE_SECTION_HEADER</span></tt></a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="PE.PE.getSections">
 <tt class="descname">getSections</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/PE.html#PE.getSections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PE.PE.getSections" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the list of sections in this PE in VStruct format. 
-:returns: List of sections
-:rtype: list</p>
+<dd><p>Return the list of sections in this PE in VStruct format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of sections</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -204,7 +250,20 @@ None if not found.</p>
 <dl class="method">
 <dt id="PE.PE.rvaToOffset">
 <tt class="descname">rvaToOffset</tt><big>(</big><em>rva</em><big>)</big><a class="reference internal" href="_modules/PE.html#PE.rvaToOffset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#PE.PE.rvaToOffset" title="Permalink to this definition">¶</a></dt>
-<dd><p>#TODO this guy, is this the relative virtual address? Me thinks so...</p>
+<dd><p>Resolve relative-virtual-address =&gt; offset for PE sections. Given a RVA, 
+returns an offset from the current location.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rva</strong> (<em>long</em>) &#8211; Relative Virtual Address to resolve</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Pointer to data</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">long</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -257,6 +316,7 @@ your bytes into a StringIO() and hands that off to <a class="reference internal"
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">vtrace</span><span class="o">,</span> <span class="nn">PE</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># Initilize our vtrace.Trace object</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span> <span class="o">=</span> <span class="n">vtrace</span><span class="o">.</span><span class="n">getTrace</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trace</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">&#39;C:\Path\To\Program</span><span class="se">\b</span><span class="s">lah.exe&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># Get our library bases</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">libBase</span> <span class="o">=</span> <span class="n">trace</span><span class="o">.</span><span class="n">getMeta</span><span class="p">(</span><span class="s">&quot;LibraryBases&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c"># Get the first address of our first entry (not realistic)</span>
@@ -478,8 +538,8 @@ in this VS_VERSIONINFO structure.</p>
 <div class="section" id="module-PE.petool">
 <span id="petool-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">petool</span></tt> Module<a class="headerlink" href="#module-PE.petool" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="PE.ordlookup.html">ordlookup Package</a><ul>
@@ -506,7 +566,7 @@ in this VS_VERSIONINFO structure.</p>
 <li><a class="reference internal" href="#module-PE.carve"><tt class="docutils literal"><span class="pre">carve</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-PE.cofflib"><tt class="docutils literal"><span class="pre">cofflib</span></tt> Module</a></li>
 <li><a class="reference internal" href="#module-PE.petool"><tt class="docutils literal"><span class="pre">petool</span></tt> Module</a></li>
-<li><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a><ul>
 </ul>
 </li>
 </ul>
