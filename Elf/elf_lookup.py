@@ -456,6 +456,37 @@ r_types_amd64 = {
     R_X86_64_TPOFF32    : 'Offset in initial TLS block',
 }
 
+############################
+# Special section indicies #
+############################
+SHN_UNDEF     0      # Undefined section
+SHN_LORESERVE 0xff00 # Start of reserved indices
+SHN_LOPROC    0xff00 # Start of processor-specific
+SHN_BEFORE    0xff00 # Order section before all others (Solaris)
+SHN_AFTER     0xff01 # Order section after all others (Solaris)
+SHN_HIPROC    0xff1f # End of processor-specific
+SHN_LOOS      0xff20 # Start of OS-specific
+SHN_HIOS      0xff3f # End of OS-specific
+SHN_ABS       0xfff1 # Associated symbol is absolute
+SHN_COMMON    0xfff2 # Associated symbol is common
+SHN_XINDEX    0xffff # Index is in extra table
+SHN_HIRESERVE 0xffff # End of reserved indices
+
+sh_name = {
+    SHN_UNDEF       : "Undefined section",
+    SHN_LORESERVE   : "Start of reserved indices",
+    SHN_LOPROC      : "Start of processor-specific",
+    SHN_BEFORE      : "Order section before all others (Solaris)",
+    SHN_AFTER       : "Order section after all others (Solaris)",
+    SHN_HIPROC      : "End of processor-specific",
+    SHN_LOOS        : "Start of OS-specific",
+    SHN_HIOS        : "End of OS-specific",
+    SHN_ABS         : "Associated symbol is absolute",
+    SHN_COMMON      : "Associated symbol is common",
+    SHN_XINDEX      : "Index is in extra table",
+    SHN_HIRESERVE   : "End of reserved indices",
+}
+
 ########################
 # valid sh_type values #
 ########################
